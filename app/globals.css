@@ -1,0 +1,147 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 96%;
+    --foreground: 0 0% 10%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 10%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 10%;
+
+    --primary: 226 100% 56%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 0 0% 90%;
+    --secondary-foreground: 0 0% 10%;
+
+    --muted: 0 0% 92%;
+    --muted-foreground: 0 0% 40%;
+
+    --accent: 39 77% 83%;
+    --accent-foreground: 0 0% 10%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 0% / 0.08;
+    --input: 0 0% 0% / 0.08;
+    --ring: 226 100% 56%;
+    --radius: 0.75rem;
+
+
+    --bg-primary: #f4f4f4;
+    --bg-secondary: rgba(255, 255, 255, 0.7);
+    --bg-tertiary: #ffffff;
+    --bg-nav: rgba(255, 255, 255, 0.8);
+    --bg-teaser: #ffffff;
+    --bg-teaser-hover: #f2f2f2;
+
+    --text-primary: #111;
+    --text-secondary: #555;
+    --text-tertiary: #777;
+    --text-accent: rgb(161, 115, 30);
+    --text-link: #444;
+
+    --border-color: rgba(0, 0, 0, 0.08);
+    --shadow-color: rgba(80, 127, 255, 0.12);
+    --nav-text: #444;
+    --nav-text-hover: #000;
+
+    --green-accent: #1DD17A;
+    --blue-accent: #507fff;
+    --pink-accent: #ff50d9;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: 0 0% 50%;
+    --foreground: 0 0% 100%;
+
+    --card: 0 0% 0%;
+    --card-foreground: 0 0% 100%;
+
+    --popover: 0 0% 5%;
+    --popover-foreground: 0 0% 100%;
+
+    --primary: 226 100% 66%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 0 0% 0%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 57%;
+
+    --accent: 39 77% 83%;
+    --accent-foreground: 0 0% 0%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 100% / 0.1;
+    --input: 0 0% 100% / 0.1;
+    --ring: 226 100% 66%;
+
+    --bg-primary: gray;
+    --bg-secondary: rgba(0, 0, 0, 0.6);
+    --bg-tertiary: rgb(8, 8, 8);
+    --bg-nav: rgba(0, 0, 0, 0.7);
+    --bg-teaser: #000000;
+    --bg-teaser-hover: #000000be;
+
+    --text-primary: white;
+    --text-secondary: #929292;
+    --text-tertiary: #666;
+    --text-accent: wheat;
+    --text-link: gray;
+
+    --border-color: rgba(255, 255, 255, 0.1);
+    --shadow-color: rgba(80, 127, 255, 0.15);
+    --nav-text: #999999;
+    --nav-text-hover: #ffffff;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: hsl(var(--background));
+    color: hsl(var(--foreground));
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+}
+
+@layer utilities {
+  .gradient-text {
+    background: linear-gradient(45deg, var(--blue-accent), var(--pink-accent));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .gradient-bg {
+    background: linear-gradient(135deg, var(--blue-accent), var(--pink-accent));
+  }
+  .btn-gradient {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  }
+  .btn-gradient-green {
+    background: linear-gradient(135deg, #26de81 0%, #20bf6b 100%);
+  }
+  .btn-gradient-red {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+  }
+  .btn-gradient-gray {
+    background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);
+  }
+}
