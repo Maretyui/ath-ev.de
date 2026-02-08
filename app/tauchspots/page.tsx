@@ -36,11 +36,14 @@ export default function TauchspotsPage() {
           {spots.map((spot) => (
             <a key={spot.id} href="#" className="no-underline">
               <div
-                className="flex items-start gap-4 p-6 max-[1000px]:p-4 max-[420px]:flex-col max-[420px]:items-center max-[420px]:text-center rounded-xl border transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg cursor-pointer"
+                className="flex items-start gap-4 p-6 max-[1000px]:p-4 max-[420px]:flex-col max-[420px]:items-center max-[420px]:text-center rounded-xl border transition-all duration-300 hover:-translate-y-1 cursor-pointer"
                 style={{
                   backgroundColor: "var(--bg-teaser)",
                   borderColor: "var(--border-color)",
+                  boxShadow: "var(--shadow-s)",
                 }}
+                onMouseEnter={(e) => (e.currentTarget.style.boxShadow = "var(--shadow-l)")}
+                onMouseLeave={(e) => (e.currentTarget.style.boxShadow = "var(--shadow-s)")}
               >
                 <img
                   src="https://placehold.co/600x400"

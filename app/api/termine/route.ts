@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server"
 import { query } from "@/lib/db"
 import { getSession } from "@/lib/session"
-import { put, del } from "@vercel/blob"
+import { writeFile, unlink, mkdir } from "fs/promises"
+import path from "path"
 
 interface TerminRow {
   id: number
@@ -10,6 +11,30 @@ interface TerminRow {
   content: string
   image: string | null
   alt: string | null
+}
+
+async function saveUploadedFile(file: File, prefix: string): Promise<string> {
+  const uploadDir = path.join(process.cwd(), "public", "uploads", prefix)
+  await mkdir(uploadDir, { recursive: true })
+
+  const ext = file.name.split(".").pop() || "jpg"
+  const filename = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`
+  const filePath = path.join(uploadDir, filename)
+
+  const buffer = Buffer.from(await file.arrayBuffer())
+  await writeFile(filePath, buffer)
+
+  return `/uploads/${prefix}/${filename}`
+}
+
+async function deleteUploadedFile(imageUrl: string) {
+  if (!imageUrl || !imageUrl.startsWith("/uploads/")) return
+  try {
+    const filePath = path.join(process.cwd(), "public", imageUrl)
+    await unlink(filePath)
+  } catch {
+    // ignore if file doesn't exist
+  }
 }
 
 export async function GET() {
@@ -46,10 +71,7 @@ export async function POST(request: Request) {
       if (imageFile.size > 5 * 1024 * 1024) {
         return NextResponse.json({ error: "Bild darf maximal 5MB gross sein" }, { status: 400 })
       }
-      const blob = await put(`termine/${Date.now()}-${imageFile.name}`, imageFile, {
-        access: "public",
-      })
-      imageUrl = blob.url
+      imageUrl = await saveUploadedFile(imageFile, "termine")
     }
 
     await query("INSERT INTO termine (date, title, content, image, alt) VALUES (?, ?, ?, ?, ?)", [
@@ -91,25 +113,19 @@ export async function PUT(request: Request) {
         return NextResponse.json({ error: "Bild darf maximal 5MB gross sein" }, { status: 400 })
       }
 
-      // Delete old image from blob storage if it exists
+      // Delete old image if it exists
       const existing = await query<TerminRow>("SELECT image FROM termine WHERE id=?", [id])
-      if (existing[0]?.image && existing[0].image.includes("blob.vercel-storage.com")) {
-        try {
-          await del(existing[0].image)
-        } catch {
-          // ignore deletion errors for old images
-        }
+      if (existing[0]?.image) {
+        await deleteUploadedFile(existing[0].image)
       }
 
-      const blob = await put(`termine/${Date.now()}-${imageFile.name}`, imageFile, {
-        access: "public",
-      })
+      const newImageUrl = await saveUploadedFile(imageFile, "termine")
 
       await query("UPDATE termine SET date=?, title=?, content=?, image=?, alt=? WHERE id=?", [
         date,
         title,
         content,
-        blob.url,
+        newImageUrl,
         alt,
         id,
       ])
@@ -136,14 +152,10 @@ export async function DELETE(request: Request) {
       return NextResponse.json({ error: "ID erforderlich" }, { status: 400 })
     }
 
-    // Delete image from blob storage
+    // Delete image file
     const existing = await query<TerminRow>("SELECT image FROM termine WHERE id=?", [id])
-    if (existing[0]?.image && existing[0].image.includes("blob.vercel-storage.com")) {
-      try {
-        await del(existing[0].image)
-      } catch {
-        // ignore deletion errors
-      }
+    if (existing[0]?.image) {
+      await deleteUploadedFile(existing[0].image)
     }
 
     await query("DELETE FROM termine WHERE id=?", [id])

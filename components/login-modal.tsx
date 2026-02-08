@@ -39,10 +39,11 @@ export function LoginModal() {
       }}
     >
       <div
-        className="rounded-2xl p-10 shadow-2xl max-w-[420px] w-[90%] border"
+        className="rounded-2xl p-10 max-w-[420px] w-[90%] border"
         style={{
           backgroundColor: "var(--bg-tertiary)",
           borderColor: "var(--border-color)",
+          boxShadow: "var(--shadow-l)",
         }}
       >
         <div className="text-center mb-8">
@@ -118,8 +119,10 @@ export function LoginModal() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 rounded-lg text-base text-white font-semibold cursor-pointer transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg disabled:opacity-60 border-none"
-            style={{ backgroundColor: "var(--blue-accent)" }}
+            className="w-full py-3 rounded-lg text-base text-white font-semibold cursor-pointer transition-all duration-300 hover:-translate-y-0.5 disabled:opacity-60 border-none"
+            style={{ backgroundColor: "var(--blue-accent)", boxShadow: "var(--shadow-m)" }}
+            onMouseEnter={(e) => (e.currentTarget.style.boxShadow = "var(--shadow-l)")}
+            onMouseLeave={(e) => (e.currentTarget.style.boxShadow = "var(--shadow-m)")}
           >
             {loading ? "Anmelden..." : "Anmelden"}
           </button>

@@ -70,7 +70,9 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: "/favicon.gif",
+    icon: [
+      { url: "/favicon.gif", type: "image/gif" },
+    ],
   },
 }
 

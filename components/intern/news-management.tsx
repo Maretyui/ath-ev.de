@@ -63,8 +63,8 @@ function BerichtFormModal({
     <>
       <div className="fixed inset-0 bg-black/50 z-[999]" onClick={onClose} />
       <div
-        className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-8 rounded-2xl shadow-2xl z-[1000] max-w-[600px] w-[90%] max-h-[90vh] overflow-y-auto"
-        style={{ backgroundColor: "var(--bg-tertiary)" }}
+        className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-8 rounded-2xl z-[1000] max-w-[600px] w-[90%] max-h-[90vh] overflow-y-auto border"
+        style={{ backgroundColor: "var(--bg-tertiary)", boxShadow: "var(--shadow-l)", borderColor: "var(--border-color)" }}
       >
         <h3 className="text-xl font-bold mb-6" style={{ color: "var(--blue-accent)" }}>
           {bericht ? "Bericht bearbeiten" : "Neuen Bericht hinzufuegen"}
@@ -218,7 +218,10 @@ export function NewsManagement() {
         </h2>
         <button
           onClick={() => setShowAdd(true)}
-          className="btn-gradient px-6 py-3 rounded-lg text-white font-semibold border-none cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-lg"
+          className="btn-gradient px-6 py-3 rounded-lg text-white font-semibold border-none cursor-pointer transition-all duration-300 hover:-translate-y-0.5"
+          style={{ boxShadow: "var(--shadow-m)" }}
+          onMouseEnter={(e) => (e.currentTarget.style.boxShadow = "var(--shadow-l)")}
+          onMouseLeave={(e) => (e.currentTarget.style.boxShadow = "var(--shadow-m)")}
         >
           Neuen Bericht hinzufuegen
         </button>
@@ -231,11 +234,14 @@ export function NewsManagement() {
         {berichte.map((bericht) => (
           <div
             key={bericht.id}
-            className="flex items-start gap-4 p-5 rounded-xl border transition-all"
+            className="flex items-start gap-4 p-5 rounded-xl border transition-all duration-300 hover:-translate-y-0.5"
             style={{
               backgroundColor: "var(--bg-teaser)",
               borderColor: "var(--border-color)",
+              boxShadow: "var(--shadow-s)",
             }}
+            onMouseEnter={(e) => (e.currentTarget.style.boxShadow = "var(--shadow-m)")}
+            onMouseLeave={(e) => (e.currentTarget.style.boxShadow = "var(--shadow-s)")}
           >
             {bericht.image && (
               <img

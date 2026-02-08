@@ -78,8 +78,8 @@ function InternContent() {
           className="p-6 rounded-2xl mb-6 flex items-center justify-between flex-wrap gap-4"
           style={{
             backgroundColor: "var(--bg-teaser)",
-            borderColor: "var(--border-color)",
             border: "1px solid var(--border-color)",
+            boxShadow: "var(--shadow-m)",
           }}
         >
           <div>
@@ -115,8 +115,8 @@ function InternContent() {
                 `}
                 style={
                   activeTab === tab.id
-                    ? { backgroundColor: "var(--blue-accent)", color: "#ffffff" }
-                    : { backgroundColor: "var(--bg-teaser)", color: "var(--text-secondary)", border: "1px solid var(--border-color)" }
+                    ? { backgroundColor: "var(--blue-accent)", color: "#ffffff", boxShadow: "var(--shadow-m)" }
+                    : { backgroundColor: "var(--bg-teaser)", color: "var(--text-secondary)", border: "1px solid var(--border-color)", boxShadow: "var(--shadow-s)" }
                 }
               >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -133,6 +133,7 @@ function InternContent() {
           style={{
             backgroundColor: "var(--bg-teaser)",
             borderColor: "var(--border-color)",
+            boxShadow: "var(--shadow-m)",
           }}
         >
           {activeTab === "members" && <MembersTable />}
