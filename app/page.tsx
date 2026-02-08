@@ -2,9 +2,33 @@
 
 import { PageShell } from "@/components/page-shell"
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "SportsClub",
+  name: "Aquanautic-Taucher Hamburg e.V.",
+  alternateName: "ATH",
+  url: "https://ath-ev.de",
+  description:
+    "Einer der aeltesten Tauchvereine Hamburgs. Tauchausbildung nach VDST/CMAS, Vereinstraining und Gemeinschaft seit ueber 40 Jahren.",
+  sport: "Tauchen",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Hamburg",
+    addressCountry: "DE",
+  },
+  memberOf: [
+    { "@type": "Organization", name: "VDST" },
+    { "@type": "Organization", name: "CMAS" },
+  ],
+}
+
 export default function HomePage() {
   return (
     <PageShell>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* Banner - transparent, lets the background-image of main-content show through */}
       <div className="relative h-[500px] max-[1000px]:h-[300px]">
         <div className="absolute right-12 top-[45%] -translate-y-1/2 text-right z-[5] max-[1000px]:right-8 max-[1000px]:top-[25%] max-[1000px]:scale-90">

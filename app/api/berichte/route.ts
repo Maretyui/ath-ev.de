@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server"
 import { query } from "@/lib/db"
 import { getSession } from "@/lib/session"
+import { writeFile, unlink, mkdir } from "fs/promises"
+import path from "path"
 
 interface BerichtRow {
   id: number
@@ -9,6 +11,30 @@ interface BerichtRow {
   content: string
   image: string | null
   alt: string | null
+}
+
+async function saveUploadedFile(file: File, prefix: string): Promise<string> {
+  const uploadDir = path.join(process.cwd(), "public", "uploads", prefix)
+  await mkdir(uploadDir, { recursive: true })
+
+  const ext = file.name.split(".").pop() || "jpg"
+  const filename = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`
+  const filePath = path.join(uploadDir, filename)
+
+  const buffer = Buffer.from(await file.arrayBuffer())
+  await writeFile(filePath, buffer)
+
+  return `/uploads/${prefix}/${filename}`
+}
+
+async function deleteUploadedFile(imageUrl: string) {
+  if (!imageUrl || !imageUrl.startsWith("/uploads/")) return
+  try {
+    const filePath = path.join(process.cwd(), "public", imageUrl)
+    await unlink(filePath)
+  } catch {
+    // ignore if file doesn't exist
+  }
 }
 
 export async function GET() {
@@ -33,17 +59,26 @@ export async function POST(request: Request) {
     const title = formData.get("title") as string
     const content = formData.get("content") as string
     const alt = (formData.get("alt") as string) || title
-    const image = "https://placehold.co/600x400"
+    const imageFile = formData.get("image") as File | null
 
     if (!date || !title || !content) {
       return NextResponse.json({ error: "Fehlende Felder" }, { status: 400 })
+    }
+
+    let imageUrl: string | null = null
+
+    if (imageFile && imageFile.size > 0) {
+      if (imageFile.size > 5 * 1024 * 1024) {
+        return NextResponse.json({ error: "Bild darf maximal 5MB gross sein" }, { status: 400 })
+      }
+      imageUrl = await saveUploadedFile(imageFile, "berichte")
     }
 
     await query("INSERT INTO berichte (date, title, content, image, alt) VALUES (?, ?, ?, ?, ?)", [
       date,
       title,
       content,
-      image,
+      imageUrl,
       alt,
     ])
 
@@ -66,12 +101,37 @@ export async function PUT(request: Request) {
     const date = formData.get("date") as string
     const title = formData.get("title") as string
     const content = formData.get("content") as string
+    const alt = (formData.get("alt") as string) || title
+    const imageFile = formData.get("image") as File | null
 
     if (!id) {
       return NextResponse.json({ error: "ID erforderlich" }, { status: 400 })
     }
 
-    await query("UPDATE berichte SET date=?, title=?, content=? WHERE id=?", [date, title, content, id])
+    if (imageFile && imageFile.size > 0) {
+      if (imageFile.size > 5 * 1024 * 1024) {
+        return NextResponse.json({ error: "Bild darf maximal 5MB gross sein" }, { status: 400 })
+      }
+
+      // Delete old image if it exists
+      const existing = await query<BerichtRow>("SELECT image FROM berichte WHERE id=?", [id])
+      if (existing[0]?.image) {
+        await deleteUploadedFile(existing[0].image)
+      }
+
+      const newImageUrl = await saveUploadedFile(imageFile, "berichte")
+
+      await query("UPDATE berichte SET date=?, title=?, content=?, image=?, alt=? WHERE id=?", [
+        date,
+        title,
+        content,
+        newImageUrl,
+        alt,
+        id,
+      ])
+    } else {
+      await query("UPDATE berichte SET date=?, title=?, content=?, alt=? WHERE id=?", [date, title, content, alt, id])
+    }
 
     return NextResponse.json({ success: true })
   } catch (error) {
@@ -90,6 +150,12 @@ export async function DELETE(request: Request) {
     const { id } = await request.json()
     if (!id) {
       return NextResponse.json({ error: "ID erforderlich" }, { status: 400 })
+    }
+
+    // Delete image file
+    const existing = await query<BerichtRow>("SELECT image FROM berichte WHERE id=?", [id])
+    if (existing[0]?.image) {
+      await deleteUploadedFile(existing[0].image)
     }
 
     await query("DELETE FROM berichte WHERE id=?", [id])

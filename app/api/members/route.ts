@@ -7,9 +7,17 @@ interface MemberRow {
   name: string
   email: string
   adresse: string
-  geburtstag: string
+  geburtstag: string | null
   telefon: string
-  mitglied_seit: string
+  mitglied_seit: string | null
+}
+
+// 🔧 Ensure MySQL DATE format (YYYY-MM-DD)
+function toMySQLDate(value: unknown): string | null {
+  if (!value) return null
+  const d = new Date(value as string)
+  if (isNaN(d.getTime())) return null
+  return d.toISOString().slice(0, 10)
 }
 
 export async function GET() {
@@ -36,15 +44,27 @@ export async function POST(request: Request) {
   }
 
   try {
-    const { name, email, adresse, geburtstag, telefon, mitglied_seit } = await request.json()
+    const { name, email, adresse, geburtstag, telefon, mitglied_seit } =
+      await request.json()
 
     if (!name || !email) {
-      return NextResponse.json({ error: "Name und E-Mail sind erforderlich" }, { status: 400 })
+      return NextResponse.json(
+        { error: "Name und E-Mail sind erforderlich" },
+        { status: 400 }
+      )
     }
 
     await query(
-      "INSERT INTO members (name, email, adresse, geburtstag, telefon, mitglied_seit) VALUES (?, ?, ?, ?, ?, ?)",
-      [name, email, adresse || "", geburtstag || null, telefon || "", mitglied_seit || null]
+      `INSERT INTO members (name, email, adresse, geburtstag, telefon, mitglied_seit)
+       VALUES (?, ?, ?, ?, ?, ?)`,
+      [
+        name,
+        email,
+        adresse || "",
+        toMySQLDate(geburtstag),
+        telefon || "",
+        toMySQLDate(mitglied_seit),
+      ]
     )
 
     return NextResponse.json({ success: true })
@@ -61,15 +81,26 @@ export async function PUT(request: Request) {
   }
 
   try {
-    const { id, name, email, adresse, geburtstag, telefon, mitglied_seit } = await request.json()
+    const { id, name, email, adresse, geburtstag, telefon, mitglied_seit } =
+      await request.json()
 
     if (!id) {
       return NextResponse.json({ error: "ID erforderlich" }, { status: 400 })
     }
 
     await query(
-      "UPDATE members SET name=?, email=?, adresse=?, geburtstag=?, telefon=?, mitglied_seit=? WHERE id=?",
-      [name, email, adresse || "", geburtstag || null, telefon || "", mitglied_seit || null, id]
+      `UPDATE members 
+       SET name=?, email=?, adresse=?, geburtstag=?, telefon=?, mitglied_seit=? 
+       WHERE id=?`,
+      [
+        name,
+        email,
+        adresse || "",
+        toMySQLDate(geburtstag),
+        telefon || "",
+        toMySQLDate(mitglied_seit),
+        id,
+      ]
     )
 
     return NextResponse.json({ success: true })
