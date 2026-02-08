@@ -3,6 +3,7 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useState, useEffect, useRef } from "react"
+import { useAuth } from "@/lib/auth-context"
 
 const navItems = [
   { href: "/", label: "Home" },
@@ -17,6 +18,7 @@ export function Navbar() {
   const pathname = usePathname()
   const [mobileOpen, setMobileOpen] = useState(false)
   const navRef = useRef<HTMLElement>(null)
+  const { user, setShowLogin, logout } = useAuth()
 
   useEffect(() => {
     function handleClick(e: MouseEvent) {
@@ -46,7 +48,7 @@ export function Navbar() {
           fontWeight: 300,
           letterSpacing: "2px",
           textTransform: "uppercase",
-          background: "linear-gradient(45deg, #507fff, #ff50d9)",
+          background: "linear-gradient(45deg, #3d6fef, #e040bf)",
           WebkitBackgroundClip: "text",
           backgroundClip: "text",
           color: "transparent",
@@ -57,10 +59,10 @@ export function Navbar() {
 
       <ul
         className={`
-          flex list-none m-0 p-0 relative
+          flex list-none m-0 p-0 relative items-center
           max-[1000px]:fixed max-[1000px]:top-0 max-[1000px]:h-screen max-[1000px]:w-[70%] max-[1000px]:max-w-[300px]
           max-[1000px]:flex-col max-[1000px]:items-center max-[1000px]:justify-center max-[1000px]:gap-8
-          max-[1000px]:z-[1000] max-[1000px]:bg-black/70 max-[1000px]:backdrop-blur-md
+          max-[1000px]:z-[1000] max-[1000px]:backdrop-blur-xl
           max-[1000px]:border-l max-[1000px]:border-white/10
           max-[1000px]:transition-[right] max-[1000px]:duration-300
           ${mobileOpen ? "max-[1000px]:right-0" : "max-[1000px]:right-[-100%]"}
@@ -68,7 +70,7 @@ export function Navbar() {
         style={{
           gap: "40px",
         }}
-      
+        data-mobile-nav
       >
         {navItems.map((item) => {
           const isActive = pathname === item.href
@@ -80,17 +82,18 @@ export function Navbar() {
                 className="no-underline transition-colors duration-300"
                 style={{
                   fontSize: "1.5rem",
-                  fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif",
+                  fontFamily:
+                    "-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif",
                   fontWeight: 300,
                   ...(isActive
                     ? {
-                        background: "linear-gradient(45deg, #507fff, #ff50d9)",
+                        background: "linear-gradient(45deg, #3d6fef, #e040bf)",
                         WebkitBackgroundClip: "text",
                         backgroundClip: "text",
                         color: "transparent",
                         paddingBottom: "2px",
                         borderBottom: "2px solid",
-                        borderImage: "linear-gradient(to right, #507fff, #ff50d9) 1",
+                        borderImage: "linear-gradient(to right, #3d6fef, #e040bf) 1",
                       }
                     : {
                         color: "var(--nav-text)",
@@ -108,6 +111,56 @@ export function Navbar() {
             </li>
           )
         })}
+
+        {/* Auth actions in nav */}
+        <li>
+          {user ? (
+            <div className="flex items-center gap-3 max-[1000px]:flex-col">
+              <Link
+                href="/intern"
+                onClick={() => setMobileOpen(false)}
+                className="no-underline transition-colors duration-300 text-sm font-medium px-4 py-2 rounded-lg"
+                style={{
+                  backgroundColor: "var(--blue-accent)",
+                  color: "#ffffff",
+                }}
+              >
+                Intern
+              </Link>
+              <button
+                onClick={() => {
+                  logout()
+                  setMobileOpen(false)
+                }}
+                className="bg-transparent border-none cursor-pointer transition-colors duration-300 text-sm font-medium px-3 py-2 rounded-lg"
+                style={{ color: "var(--nav-text)" }}
+                onMouseEnter={(e) => ((e.target as HTMLElement).style.color = "var(--nav-text-hover)")}
+                onMouseLeave={(e) => ((e.target as HTMLElement).style.color = "var(--nav-text)")}
+              >
+                Abmelden
+              </button>
+            </div>
+          ) : (
+            <button
+              onClick={() => {
+                setShowLogin(true)
+                setMobileOpen(false)
+              }}
+              className="bg-transparent border-none cursor-pointer transition-colors duration-300"
+              style={{
+                fontSize: "1.5rem",
+                fontFamily:
+                  "-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif",
+                fontWeight: 300,
+                color: "var(--nav-text)",
+              }}
+              onMouseEnter={(e) => ((e.target as HTMLElement).style.color = "var(--nav-text-hover)")}
+              onMouseLeave={(e) => ((e.target as HTMLElement).style.color = "var(--nav-text)")}
+            >
+              Login
+            </button>
+          )}
+        </li>
       </ul>
 
       {/* Mobile hamburger menu */}

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server"
 import { query } from "@/lib/db"
 import { getSession } from "@/lib/session"
+import { put, del } from "@vercel/blob"
 
 interface BerichtRow {
   id: number
@@ -33,17 +34,29 @@ export async function POST(request: Request) {
     const title = formData.get("title") as string
     const content = formData.get("content") as string
     const alt = (formData.get("alt") as string) || title
-    const image = "https://placehold.co/600x400"
+    const imageFile = formData.get("image") as File | null
 
     if (!date || !title || !content) {
       return NextResponse.json({ error: "Fehlende Felder" }, { status: 400 })
+    }
+
+    let imageUrl: string | null = null
+
+    if (imageFile && imageFile.size > 0) {
+      if (imageFile.size > 5 * 1024 * 1024) {
+        return NextResponse.json({ error: "Bild darf maximal 5MB gross sein" }, { status: 400 })
+      }
+      const blob = await put(`berichte/${Date.now()}-${imageFile.name}`, imageFile, {
+        access: "public",
+      })
+      imageUrl = blob.url
     }
 
     await query("INSERT INTO berichte (date, title, content, image, alt) VALUES (?, ?, ?, ?, ?)", [
       date,
       title,
       content,
-      image,
+      imageUrl,
       alt,
     ])
 
@@ -66,12 +79,43 @@ export async function PUT(request: Request) {
     const date = formData.get("date") as string
     const title = formData.get("title") as string
     const content = formData.get("content") as string
+    const alt = (formData.get("alt") as string) || title
+    const imageFile = formData.get("image") as File | null
 
     if (!id) {
       return NextResponse.json({ error: "ID erforderlich" }, { status: 400 })
     }
 
-    await query("UPDATE berichte SET date=?, title=?, content=? WHERE id=?", [date, title, content, id])
+    if (imageFile && imageFile.size > 0) {
+      if (imageFile.size > 5 * 1024 * 1024) {
+        return NextResponse.json({ error: "Bild darf maximal 5MB gross sein" }, { status: 400 })
+      }
+
+      // Delete old image from blob storage if it exists
+      const existing = await query<BerichtRow>("SELECT image FROM berichte WHERE id=?", [id])
+      if (existing[0]?.image && existing[0].image.includes("blob.vercel-storage.com")) {
+        try {
+          await del(existing[0].image)
+        } catch {
+          // ignore deletion errors for old images
+        }
+      }
+
+      const blob = await put(`berichte/${Date.now()}-${imageFile.name}`, imageFile, {
+        access: "public",
+      })
+
+      await query("UPDATE berichte SET date=?, title=?, content=?, image=?, alt=? WHERE id=?", [
+        date,
+        title,
+        content,
+        blob.url,
+        alt,
+        id,
+      ])
+    } else {
+      await query("UPDATE berichte SET date=?, title=?, content=?, alt=? WHERE id=?", [date, title, content, alt, id])
+    }
 
     return NextResponse.json({ success: true })
   } catch (error) {
@@ -90,6 +134,16 @@ export async function DELETE(request: Request) {
     const { id } = await request.json()
     if (!id) {
       return NextResponse.json({ error: "ID erforderlich" }, { status: 400 })
+    }
+
+    // Delete image from blob storage
+    const existing = await query<BerichtRow>("SELECT image FROM berichte WHERE id=?", [id])
+    if (existing[0]?.image && existing[0].image.includes("blob.vercel-storage.com")) {
+      try {
+        await del(existing[0].image)
+      } catch {
+        // ignore deletion errors
+      }
     }
 
     await query("DELETE FROM berichte WHERE id=?", [id])

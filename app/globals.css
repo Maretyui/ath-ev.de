@@ -35,32 +35,33 @@
 
 
     --bg-primary: #f4f4f4;
-    --bg-secondary: rgba(255, 255, 255, 0.7);
+    --bg-secondary: rgba(255, 255, 255, 0.85);
     --bg-tertiary: #ffffff;
-    --bg-nav: rgba(255, 255, 255, 0.8);
+    --bg-nav: rgba(255, 255, 255, 0.92);
+    --bg-mobile-nav: rgba(255, 255, 255, 0.95);
     --bg-teaser: #ffffff;
     --bg-teaser-hover: #f2f2f2;
 
-    --text-primary: #111;
-    --text-secondary: #555;
-    --text-tertiary: #777;
-    --text-accent: rgb(161, 115, 30);
-    --text-link: #444;
+    --text-primary: #1a1a1a;
+    --text-secondary: #3d3d3d;
+    --text-tertiary: #666;
+    --text-accent: #b07a1a;
+    --text-link: #333;
 
-    --border-color: rgba(0, 0, 0, 0.08);
+    --border-color: rgba(0, 0, 0, 0.1);
     --shadow-color: rgba(80, 127, 255, 0.12);
-    --nav-text: #444;
+    --nav-text: #333;
     --nav-text-hover: #000;
 
-    --green-accent: #1DD17A;
-    --blue-accent: #507fff;
-    --pink-accent: #ff50d9;
+    --green-accent: #17b86a;
+    --blue-accent: #3d6fef;
+    --pink-accent: #e040bf;
   }
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: 0 0% 50%;
+    --background: 0 0% 7%;
     --foreground: 0 0% 100%;
 
     --card: 0 0% 0%;
@@ -88,22 +89,23 @@
     --input: 0 0% 100% / 0.1;
     --ring: 226 100% 66%;
 
-    --bg-primary: gray;
-    --bg-secondary: rgba(0, 0, 0, 0.6);
-    --bg-tertiary: rgb(8, 8, 8);
-    --bg-nav: rgba(0, 0, 0, 0.7);
-    --bg-teaser: #000000;
-    --bg-teaser-hover: #000000be;
+    --bg-primary: #111111;
+    --bg-secondary: rgba(17, 17, 17, 0.85);
+    --bg-tertiary: #0a0a0a;
+    --bg-nav: rgba(17, 17, 17, 0.92);
+    --bg-mobile-nav: rgba(17, 17, 17, 0.97);
+    --bg-teaser: #1a1a1a;
+    --bg-teaser-hover: #222222;
 
-    --text-primary: white;
-    --text-secondary: #929292;
-    --text-tertiary: #666;
-    --text-accent: wheat;
-    --text-link: gray;
+    --text-primary: #f0f0f0;
+    --text-secondary: #b0b0b0;
+    --text-tertiary: #808080;
+    --text-accent: #ddb867;
+    --text-link: #c0c0c0;
 
-    --border-color: rgba(255, 255, 255, 0.1);
-    --shadow-color: rgba(80, 127, 255, 0.15);
-    --nav-text: #999999;
+    --border-color: rgba(255, 255, 255, 0.12);
+    --shadow-color: rgba(80, 127, 255, 0.2);
+    --nav-text: #b0b0b0;
     --nav-text-hover: #ffffff;
   }
 }
@@ -143,5 +145,12 @@
   }
   .btn-gradient-gray {
     background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);
+  }
+}
+
+/* Mobile nav background */
+@media (max-width: 1000px) {
+  [data-mobile-nav] {
+    background-color: var(--bg-mobile-nav) !important;
   }
 }
