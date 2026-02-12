@@ -12,7 +12,6 @@ interface MemberRow {
   mitglied_seit: string | null
 }
 
-// 🔧 Ensure MySQL DATE format (YYYY-MM-DD)
 function toMySQLDate(value: unknown): string | null {
   if (!value) return null
   const d = new Date(value as string)

@@ -39,7 +39,7 @@ function InternContent() {
             Interner Bereich
           </h1>
           <p className="mb-6 leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-            Dieser Bereich ist nur fuer angemeldete Mitglieder zugaenglich. Bitte melden Sie sich an.
+            Dieser Bereich ist nur für angemeldete Mitglieder zugänglich. Bitte melden Sie sich an.
           </p>
           <button
             onClick={() => setShowLogin(true)}
@@ -127,7 +127,6 @@ function InternContent() {
             ))}
         </div>
 
-        {/* Tab Content */}
         <div
           className="rounded-2xl p-6 max-[600px]:p-4 border"
           style={{

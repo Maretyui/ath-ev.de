@@ -33,7 +33,6 @@ async function deleteUploadedFile(imageUrl: string) {
     const filePath = path.join(process.cwd(), "public", imageUrl)
     await unlink(filePath)
   } catch {
-    // ignore if file doesn't exist
   }
 }
 
@@ -113,7 +112,6 @@ export async function PUT(request: Request) {
         return NextResponse.json({ error: "Bild darf maximal 5MB gross sein" }, { status: 400 })
       }
 
-      // Delete old image if it exists
       const existing = await query<BerichtRow>("SELECT image FROM berichte WHERE id=?", [id])
       if (existing[0]?.image) {
         await deleteUploadedFile(existing[0].image)
@@ -151,8 +149,6 @@ export async function DELETE(request: Request) {
     if (!id) {
       return NextResponse.json({ error: "ID erforderlich" }, { status: 400 })
     }
-
-    // Delete image file
     const existing = await query<BerichtRow>("SELECT image FROM berichte WHERE id=?", [id])
     if (existing[0]?.image) {
       await deleteUploadedFile(existing[0].image)

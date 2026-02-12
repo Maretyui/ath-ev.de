@@ -156,9 +156,15 @@
   }
 }
 
-/* Mobile nav background */
 @media (max-width: 1000px) {
   [data-mobile-nav] {
     background-color: var(--bg-mobile-nav) !important;
   }
+}
+
+:root{
+  -webkit-overflow-scrolling: touch;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  scrollbar-color: transparent;
 }
