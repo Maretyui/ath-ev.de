@@ -1,9 +1,14 @@
 "use client"
 
+import dynamic from "next/dynamic"
 import { PageShell } from "@/components/page-shell"
-import { DivingScene } from "@/components/diving-scene"
 import Link from "next/link"
 import { ChevronRight, Calendar, ArrowRight } from "lucide-react"
+
+const DivingScene = dynamic(
+  () => import("@/components/diving-scene").then((mod) => mod.DivingScene),
+  { ssr: false }
+)
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -34,55 +39,63 @@ export default function HomePage() {
       />
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden min-h-[90vh] flex flex-col items-center justify-center">
+      <section className="relative overflow-hidden min-h-[90vh] flex flex-col items-center justify-center px-6">
         {/* Subtle gradient background */}
-        <div className="absolute inset-0 bg-gradient-to-b from-cyan-50/50 via-white to-white" />
+        <div className="absolute inset-0 bg-gradient-to-br from-cyan-50 via-white to-amber-50/30" />
         
-        <div className="relative w-full max-w-6xl mx-auto px-6">
-          {/* Text content */}
-          <div className="text-center mb-4">
-            <p className="text-sm uppercase tracking-widest text-cyan-600 font-medium mb-4">
-              Hamburg&apos;s Tauchverein seit 1980
-            </p>
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-slate-800 leading-none mb-6 tracking-tight">
-              Aquanautik
-              <br />
-              <span className="bg-gradient-to-r from-cyan-600 via-teal-500 to-cyan-600 bg-clip-text text-transparent">
-                Taucher
-              </span>
-            </h1>
-          </div>
-
-          {/* 3D Scene */}
-          <DivingScene />
-
-          {/* CTA */}
-          <div className="text-center -mt-8 relative z-10">
-            <p className="text-lg text-slate-600 mb-8 max-w-md mx-auto">
-              Entdecke die Unterwasserwelt mit uns. Ob Anfänger oder Profi - 
-              bei uns bist du willkommen.
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link
-                href="/termine"
-                className="group inline-flex items-center gap-2 px-8 py-4 bg-slate-900 text-white font-semibold rounded-full hover:bg-slate-800 transition-all"
-              >
-                Schnuppertauchen
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </Link>
-              <Link
-                href="/ausbildung"
-                className="inline-flex items-center gap-2 px-8 py-4 text-slate-700 font-semibold rounded-full border-2 border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all"
-              >
-                Mehr erfahren
-              </Link>
+        <div className="relative w-full max-w-5xl mx-auto">
+          {/* Main content grid */}
+          <div className="grid lg:grid-cols-2 gap-8 items-center">
+            {/* Text content */}
+            <div className="text-center lg:text-left">
+              <p className="text-sm uppercase tracking-widest text-cyan-600 font-medium mb-4">
+                Tauchverein Hamburg
+              </p>
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-slate-800 leading-[1.1] mb-6 tracking-tight">
+                Aquanautik
+                <br />
+                <span className="text-cyan-600">
+                  Taucher
+                </span>
+              </h1>
+              <p className="text-lg text-slate-600 mb-8 max-w-md mx-auto lg:mx-0">
+                Entdecke die Unterwasserwelt mit uns. 
+                Ob Anfänger oder Profi - bei uns bist du willkommen.
+              </p>
+              <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+                <Link
+                  href="/termine"
+                  className="group inline-flex items-center gap-2 px-8 py-4 bg-slate-900 text-white font-semibold rounded-full hover:bg-slate-800 transition-all"
+                >
+                  Schnuppertauchen
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </Link>
+                <Link
+                  href="/ausbildung"
+                  className="inline-flex items-center gap-2 px-8 py-4 text-slate-700 font-semibold rounded-full border-2 border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all"
+                >
+                  Mehr erfahren
+                </Link>
+              </div>
             </div>
+
+            {/* 3D Scene */}
+            <div className="hidden lg:block">
+              <DivingScene />
+            </div>
+          </div>
+        </div>
+
+        {/* Scroll indicator */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+          <div className="w-6 h-10 rounded-full border-2 border-slate-300 flex items-start justify-center p-2">
+            <div className="w-1 h-2 bg-slate-400 rounded-full" />
           </div>
         </div>
       </section>
 
       {/* Simple Info Section */}
-      <section className="py-24 md:py-32">
+      <section className="py-24 md:py-32 bg-white">
         <div className="max-w-4xl mx-auto px-6">
           <div className="grid md:grid-cols-2 gap-16 items-start">
             <div>
@@ -91,7 +104,7 @@ export default function HomePage() {
               </h2>
               <div className="space-y-4 text-slate-600 leading-relaxed">
                 <p>
-                  Wir sind ein Familienverein. Das bedeutet: Bei uns sind Ausfahrten 
+                  Wir sind ein Familienverein. Bei uns sind Ausfahrten 
                   und Training so gestaltet, dass die ganze Familie mitkommen kann - 
                   egal ob alle tauchen oder nur einer.
                 </p>
@@ -110,21 +123,21 @@ export default function HomePage() {
             </div>
             
             <div className="space-y-6">
-              <div className="p-6 rounded-2xl bg-gradient-to-br from-slate-50 to-cyan-50/50 border border-slate-100">
+              <div className="p-6 rounded-2xl bg-slate-50 border border-slate-100">
                 <h3 className="font-semibold text-slate-800 mb-2">Training</h3>
                 <p className="text-sm text-slate-600">
                   Wöchentliches Training in Hamburger Hallenbädern und Freiwasser 
                   im Sommer.
                 </p>
               </div>
-              <div className="p-6 rounded-2xl bg-gradient-to-br from-slate-50 to-amber-50/50 border border-slate-100">
+              <div className="p-6 rounded-2xl bg-slate-50 border border-slate-100">
                 <h3 className="font-semibold text-slate-800 mb-2">Ausrüstung</h3>
                 <p className="text-sm text-slate-600">
                   Komplette Leihausrüstung und eigener Kompressor im Vereinsraum 
                   verfügbar.
                 </p>
               </div>
-              <div className="p-6 rounded-2xl bg-gradient-to-br from-slate-50 to-teal-50/50 border border-slate-100">
+              <div className="p-6 rounded-2xl bg-slate-50 border border-slate-100">
                 <h3 className="font-semibold text-slate-800 mb-2">Gemeinschaft</h3>
                 <p className="text-sm text-slate-600">
                   Regelmäßige Vereinsaktivitäten, Ausfahrten und gemeinsame 
