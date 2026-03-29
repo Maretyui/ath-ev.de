@@ -2,6 +2,7 @@
 
 import { PageShell } from "@/components/page-shell"
 import useSWR from "swr"
+import { Calendar, MapPin, Clock } from "lucide-react"
 
 interface Termin {
   id: number
@@ -31,68 +32,92 @@ function TermineContent() {
   const termine: Termin[] = data?.termine || []
 
   return (
-    <main
-      className="flex-1 px-8 py-0"
-      style={{
-        backgroundColor: "var(--bg-secondary)",
-        backdropFilter: "blur(20px)",
-        borderTop: "2px solid var(--border-color)",
-      }}
-    >
-      <h1
-        className="my-8 text-center text-[3rem] max-[800px]:text-[2.2rem] font-bold transition-colors duration-300"
-        style={{ color: "var(--text-accent)" }}
-      >
-        Veranstaltungen
-      </h1>
-
-      {error && <p className="text-center text-red-400">Fehler beim Laden der Termine</p>}
-      {!data && !error && (
-        <p className="text-center" style={{ color: "var(--text-secondary)" }}>
-          Termine werden geladen...
+    <main className="flex-1">
+      {/* Header */}
+      <div className="bg-gradient-to-b from-cyan-50 to-white py-12 md:py-16 text-center">
+        <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-400 mb-4 shadow-lg shadow-amber-500/25">
+          <Calendar className="w-8 h-8 text-white" />
+        </div>
+        <h1 className="text-3xl md:text-4xl font-bold text-slate-800 mb-3">
+          Termine & Veranstaltungen
+        </h1>
+        <p className="text-slate-600 max-w-xl mx-auto px-6">
+          Kommende Events, Trainings und Ausfahrten
         </p>
-      )}
-
-      <div className="grid grid-cols-2 max-[1000px]:grid-cols-1 gap-8 mt-8 mb-12">
-        {termine.map((t) => (
-          <div
-            key={t.id}
-            className="flex items-start gap-4 p-6 max-[1000px]:p-4 max-[420px]:flex-col max-[420px]:items-center max-[420px]:text-center rounded-xl border transition-all duration-300 hover:-translate-y-1 cursor-default"
-            style={{
-              backgroundColor: "var(--bg-teaser)",
-              borderColor: "var(--border-color)",
-              boxShadow: "var(--shadow-s)",
-            }}
-            onMouseEnter={(e) => (e.currentTarget.style.boxShadow = "var(--shadow-l)")}
-            onMouseLeave={(e) => (e.currentTarget.style.boxShadow = "var(--shadow-s)")}
-          >
-            {t.image && (
-              <img
-                src={t.image}
-                alt={t.alt || t.title}
-                className="w-28 h-28 max-[420px]:w-full max-[420px]:max-w-[200px] max-[420px]:h-[120px] rounded-xl object-cover flex-shrink-0"
-              />
-            )}
-            <div className="flex-1">
-              <div className="text-[0.9rem] mb-2" style={{ color: "var(--blue-accent)" }}>
-                {formatDate(t.date)}
-              </div>
-              <h2 className="text-[1.3rem] font-bold mb-2" style={{ color: "var(--green-accent)" }}>
-                {t.title}
-              </h2>
-              <p className="leading-relaxed m-0" style={{ color: "var(--text-secondary)" }}>
-                {t.content && t.content.length > 150 ? t.content.substring(0, 150) + "..." : t.content}
-              </p>
-            </div>
-          </div>
-        ))}
       </div>
 
-      {termine.length === 0 && data && (
-        <p className="text-center py-12" style={{ color: "var(--text-secondary)" }}>
-          Keine Termine vorhanden
-        </p>
-      )}
+      {/* Content */}
+      <div className="max-w-4xl mx-auto px-6 py-12">
+        {error && (
+          <div className="text-center py-12">
+            <p className="text-red-500">Fehler beim Laden der Termine</p>
+          </div>
+        )}
+        
+        {!data && !error && (
+          <div className="text-center py-12">
+            <div className="inline-block w-8 h-8 border-4 border-cyan-200 border-t-cyan-500 rounded-full animate-spin" />
+            <p className="text-slate-500 mt-4">Termine werden geladen...</p>
+          </div>
+        )}
+
+        <div className="space-y-4">
+          {termine.map((t) => (
+            <div
+              key={t.id}
+              className="group flex flex-col md:flex-row gap-6 bg-white rounded-2xl border border-slate-100 p-6 hover:border-cyan-200 hover:shadow-xl hover:shadow-cyan-100/50 transition-all duration-300"
+            >
+              {/* Date Badge */}
+              <div className="flex-shrink-0">
+                <div className="w-20 h-20 rounded-xl bg-gradient-to-br from-cyan-50 to-teal-50 border border-cyan-100 flex flex-col items-center justify-center">
+                  <span className="text-2xl font-bold text-cyan-700">
+                    {new Date(t.date).getDate()}
+                  </span>
+                  <span className="text-xs font-medium text-cyan-600 uppercase">
+                    {new Date(t.date).toLocaleDateString("de-DE", { month: "short" })}
+                  </span>
+                </div>
+              </div>
+
+              {/* Content */}
+              <div className="flex-1">
+                <div className="flex items-center gap-4 text-sm text-slate-500 mb-2">
+                  <span className="flex items-center gap-1">
+                    <Clock className="w-4 h-4" />
+                    {formatDate(t.date)}
+                  </span>
+                </div>
+                <h2 className="text-xl font-semibold text-slate-800 mb-2 group-hover:text-cyan-700 transition-colors">
+                  {t.title}
+                </h2>
+                <p className="text-slate-600 leading-relaxed">
+                  {t.content && t.content.length > 200 ? t.content.substring(0, 200) + "..." : t.content}
+                </p>
+              </div>
+
+              {/* Image */}
+              {t.image && (
+                <div className="flex-shrink-0">
+                  <img
+                    src={t.image}
+                    alt={t.alt || t.title}
+                    className="w-32 h-32 rounded-xl object-cover"
+                  />
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+
+        {termine.length === 0 && data && (
+          <div className="text-center py-16">
+            <div className="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center mx-auto mb-4">
+              <Calendar className="w-8 h-8 text-slate-400" />
+            </div>
+            <p className="text-slate-500">Aktuell keine Termine geplant</p>
+          </div>
+        )}
+      </div>
     </main>
   )
 }

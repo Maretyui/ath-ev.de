@@ -2,6 +2,7 @@
 
 import { PageShell } from "@/components/page-shell"
 import useSWR from "swr"
+import { Newspaper, Calendar } from "lucide-react"
 
 interface Bericht {
   id: number
@@ -31,70 +32,77 @@ function NewsContent() {
   const berichte: Bericht[] = data?.berichte || []
 
   return (
-    <main
-      className="flex-1 px-8 py-0"
-      style={{
-        backgroundColor: "var(--bg-secondary)",
-        backdropFilter: "blur(20px)",
-        borderTop: "2px solid var(--border-color)",
-      }}
-    >
-      <h1
-        className="my-8 text-center text-[3rem] max-[800px]:text-[2.2rem] font-bold transition-colors duration-300"
-        style={{ color: "var(--text-accent)" }}
-      >
-        News
-      </h1>
-
-      {error && <p className="text-center text-red-400">Fehler beim Laden der Berichte</p>}
-      {!data && !error && (
-        <p className="text-center" style={{ color: "var(--text-secondary)" }}>
-          Berichte werden geladen...
+    <main className="flex-1">
+      {/* Header */}
+      <div className="bg-gradient-to-b from-cyan-50 to-white py-12 md:py-16 text-center">
+        <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-cyan-500 to-teal-400 mb-4 shadow-lg shadow-cyan-500/25">
+          <Newspaper className="w-8 h-8 text-white" />
+        </div>
+        <h1 className="text-3xl md:text-4xl font-bold text-slate-800 mb-3">
+          News & Berichte
+        </h1>
+        <p className="text-slate-600 max-w-xl mx-auto px-6">
+          Aktuelle Nachrichten und Berichte aus unserem Vereinsleben
         </p>
-      )}
-
-      <div className="grid grid-cols-2 max-[1000px]:grid-cols-1 gap-8 mt-8 mb-12">
-        {berichte.map((bericht) => (
-          <article
-            key={bericht.id}
-            className="flex items-start gap-4 p-6 max-[1000px]:p-4 max-[420px]:flex-col max-[420px]:items-center max-[420px]:text-center rounded-xl border transition-all duration-300 hover:-translate-y-1 cursor-default"
-            style={{
-              backgroundColor: "var(--bg-teaser)",
-              borderColor: "var(--border-color)",
-              boxShadow: "var(--shadow-s)",
-            }}
-            onMouseEnter={(e) => (e.currentTarget.style.boxShadow = "var(--shadow-l)")}
-            onMouseLeave={(e) => (e.currentTarget.style.boxShadow = "var(--shadow-s)")}
-          >
-            {bericht.image && (
-              <img
-                src={bericht.image}
-                alt={bericht.alt || bericht.title}
-                className="w-28 h-28 max-[420px]:w-full max-[420px]:max-w-[200px] max-[420px]:h-[120px] rounded-xl object-cover flex-shrink-0"
-              />
-            )}
-            <div className="flex-1">
-              <div className="text-[0.9rem] mb-2" style={{ color: "var(--blue-accent)" }}>
-                {formatDate(bericht.date)}
-              </div>
-              <h2 className="text-[1.3rem] font-bold mb-2" style={{ color: "var(--green-accent)" }}>
-                {bericht.title}
-              </h2>
-              <p className="leading-relaxed m-0" style={{ color: "var(--text-secondary)" }}>
-                {bericht.content && bericht.content.length > 150
-                  ? bericht.content.substring(0, 150) + "..."
-                  : bericht.content}
-              </p>
-            </div>
-          </article>
-        ))}
       </div>
 
-      {berichte.length === 0 && data && (
-        <p className="text-center py-12" style={{ color: "var(--text-secondary)" }}>
-          Keine Berichte vorhanden
-        </p>
-      )}
+      {/* Content */}
+      <div className="max-w-6xl mx-auto px-6 py-12">
+        {error && (
+          <div className="text-center py-12">
+            <p className="text-red-500">Fehler beim Laden der Berichte</p>
+          </div>
+        )}
+        
+        {!data && !error && (
+          <div className="text-center py-12">
+            <div className="inline-block w-8 h-8 border-4 border-cyan-200 border-t-cyan-500 rounded-full animate-spin" />
+            <p className="text-slate-500 mt-4">Berichte werden geladen...</p>
+          </div>
+        )}
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {berichte.map((bericht) => (
+            <article
+              key={bericht.id}
+              className="group bg-white rounded-2xl border border-slate-100 overflow-hidden hover:border-cyan-200 hover:shadow-xl hover:shadow-cyan-100/50 transition-all duration-300"
+            >
+              {bericht.image && (
+                <div className="aspect-video overflow-hidden">
+                  <img
+                    src={bericht.image}
+                    alt={bericht.alt || bericht.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
+              )}
+              <div className="p-6">
+                <div className="flex items-center gap-2 text-sm text-cyan-600 mb-3">
+                  <Calendar className="w-4 h-4" />
+                  {formatDate(bericht.date)}
+                </div>
+                <h2 className="text-xl font-semibold text-slate-800 mb-3 group-hover:text-cyan-700 transition-colors">
+                  {bericht.title}
+                </h2>
+                <p className="text-slate-600 leading-relaxed">
+                  {bericht.content && bericht.content.length > 150
+                    ? bericht.content.substring(0, 150) + "..."
+                    : bericht.content}
+                </p>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        {berichte.length === 0 && data && (
+          <div className="text-center py-16">
+            <div className="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center mx-auto mb-4">
+              <Newspaper className="w-8 h-8 text-slate-400" />
+            </div>
+            <p className="text-slate-500">Noch keine Berichte vorhanden</p>
+          </div>
+        )}
+      </div>
     </main>
   )
 }

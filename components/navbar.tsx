@@ -4,6 +4,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useState, useEffect, useRef } from "react"
 import { useAuth } from "@/lib/auth-context"
+import { Waves, Menu, X } from "lucide-react"
 
 const navItems = [
   { href: "/", label: "Home" },
@@ -33,78 +34,34 @@ export function Navbar() {
   return (
     <nav
       ref={navRef}
-      className="flex items-center justify-between sticky top-0 z-50"
-      style={{
-        padding: "1.25rem 3.1rem",
-        backgroundColor: "var(--bg-nav)",
-        backdropFilter: "blur(10px)",
-      }}
+      className="flex items-center justify-between sticky top-0 z-50 px-6 py-4 md:px-12 bg-white/95 backdrop-blur-md border-b border-cyan-100 shadow-sm"
     >
+      {/* Logo */}
       <Link
         href="/"
-        className="no-underline"
-        style={{
-          fontSize: "1.9rem",
-          fontWeight: 300,
-          letterSpacing: "2px",
-          textTransform: "uppercase",
-          background: "linear-gradient(45deg, #3d6fef, #e040bf)",
-          WebkitBackgroundClip: "text",
-          backgroundClip: "text",
-          color: "transparent",
-        }}
+        className="flex items-center gap-2 no-underline group"
       >
-        ATH-EV
+        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-teal-400 flex items-center justify-center shadow-md group-hover:shadow-lg transition-shadow">
+          <Waves className="w-6 h-6 text-white" />
+        </div>
+        <span className="text-xl font-bold text-slate-800 tracking-tight">
+          ATH<span className="text-cyan-600">.</span>
+        </span>
       </Link>
 
-      <ul
-        className={`
-          flex list-none m-0 p-0 relative items-center
-          max-[1000px]:fixed max-[1000px]:top-0 max-[1000px]:h-screen max-[1000px]:w-[70%] max-[1000px]:max-w-[300px]
-          max-[1000px]:flex-col max-[1000px]:items-center max-[1000px]:justify-center max-[1000px]:gap-8
-          max-[1000px]:z-[1000] max-[1000px]:backdrop-blur-xl
-          max-[1000px]:border-l max-[1000px]:border-white/10
-          max-[1000px]:transition-[right] max-[1000px]:duration-300
-          ${mobileOpen ? "max-[1000px]:right-0" : "max-[1000px]:right-[-100%]"}
-        `}
-        style={{
-          gap: "40px",
-        }}
-        data-mobile-nav
-      >
+      {/* Desktop Navigation */}
+      <ul className="hidden lg:flex items-center gap-1">
         {navItems.map((item) => {
           const isActive = pathname === item.href
           return (
             <li key={item.href}>
               <Link
                 href={item.href}
-                onClick={() => setMobileOpen(false)}
-                className="no-underline transition-colors duration-300"
-                style={{
-                  fontSize: "1.5rem",
-                  fontFamily:
-                    "-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif",
-                  fontWeight: 300,
-                  ...(isActive
-                    ? {
-                        background: "linear-gradient(45deg, #3d6fef, #e040bf)",
-                        WebkitBackgroundClip: "text",
-                        backgroundClip: "text",
-                        color: "transparent",
-                        paddingBottom: "2px",
-                        borderBottom: "2px solid",
-                        borderImage: "linear-gradient(to right, #3d6fef, #e040bf) 1",
-                      }
-                    : {
-                        color: "var(--nav-text)",
-                      }),
-                }}
-                onMouseEnter={(e) => {
-                  if (!isActive) (e.target as HTMLElement).style.color = "var(--nav-text-hover)"
-                }}
-                onMouseLeave={(e) => {
-                  if (!isActive) (e.target as HTMLElement).style.color = "var(--nav-text)"
-                }}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200
+                  ${isActive 
+                    ? "bg-cyan-50 text-cyan-700" 
+                    : "text-slate-600 hover:text-cyan-700 hover:bg-cyan-50/50"
+                  }`}
               >
                 {item.label}
               </Link>
@@ -112,50 +69,27 @@ export function Navbar() {
           )
         })}
 
-        {/* Auth actions in nav */}
-        <li>
+        {/* Auth actions */}
+        <li className="ml-4 pl-4 border-l border-slate-200">
           {user ? (
-            <div className="flex items-center gap-3 max-[1000px]:flex-col">
+            <div className="flex items-center gap-2">
               <Link
                 href="/intern"
-                onClick={() => setMobileOpen(false)}
-                className="no-underline transition-colors duration-300 text-sm font-medium px-4 py-2 rounded-lg"
-                style={{
-                  backgroundColor: "var(--blue-accent)",
-                  color: "#ffffff",
-                }}
+                className="px-4 py-2 bg-gradient-to-r from-cyan-500 to-teal-400 text-white text-sm font-medium rounded-lg shadow-md hover:shadow-lg transition-shadow"
               >
                 Intern
               </Link>
               <button
-                onClick={() => {
-                  logout()
-                  setMobileOpen(false)
-                }}
-                className="bg-transparent border-none cursor-pointer transition-colors duration-300 text-sm font-medium px-3 py-2 rounded-lg"
-                style={{ color: "var(--nav-text)" }}
-                onMouseEnter={(e) => ((e.target as HTMLElement).style.color = "var(--nav-text-hover)")}
-                onMouseLeave={(e) => ((e.target as HTMLElement).style.color = "var(--nav-text)")}
+                onClick={() => logout()}
+                className="px-3 py-2 text-sm font-medium text-slate-500 hover:text-slate-700 transition-colors"
               >
                 Abmelden
               </button>
             </div>
           ) : (
             <button
-              onClick={() => {
-                setShowLogin(true)
-                setMobileOpen(false)
-              }}
-              className="bg-transparent border-none cursor-pointer transition-colors duration-300"
-              style={{
-                fontSize: "1.5rem",
-                fontFamily:
-                  "-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif",
-                fontWeight: 300,
-                color: "var(--nav-text)",
-              }}
-              onMouseEnter={(e) => ((e.target as HTMLElement).style.color = "var(--nav-text-hover)")}
-              onMouseLeave={(e) => ((e.target as HTMLElement).style.color = "var(--nav-text)")}
+              onClick={() => setShowLogin(true)}
+              className="px-4 py-2 text-sm font-medium text-cyan-700 hover:bg-cyan-50 rounded-lg transition-colors"
             >
               Login
             </button>
@@ -163,34 +97,79 @@ export function Navbar() {
         </li>
       </ul>
 
-      {/* Mobile hamburger menu */}
+      {/* Mobile Menu Button */}
       <button
-        className="hidden max-[1000px]:flex flex-col cursor-pointer z-[1001] bg-transparent border-none p-0"
+        className="lg:hidden p-2 rounded-lg hover:bg-cyan-50 transition-colors"
         onClick={() => setMobileOpen(!mobileOpen)}
         aria-label="Toggle navigation"
       >
-        <span
-          className="block w-[25px] h-[3px] my-[3px] transition-transform duration-300 origin-center"
-          style={{
-            backgroundColor: "var(--text-primary)",
-            transform: mobileOpen ? "rotate(45deg) translate(6px, 6px)" : "none",
-          }}
-        />
-        <span
-          className="block w-[25px] h-[3px] my-[3px] transition-opacity duration-300"
-          style={{
-            backgroundColor: "var(--text-primary)",
-            opacity: mobileOpen ? 0 : 1,
-          }}
-        />
-        <span
-          className="block w-[25px] h-[3px] my-[3px] transition-transform duration-300 origin-center"
-          style={{
-            backgroundColor: "var(--text-primary)",
-            transform: mobileOpen ? "rotate(-45deg) translate(7px, -6px)" : "none",
-          }}
-        />
+        {mobileOpen ? (
+          <X className="w-6 h-6 text-slate-700" />
+        ) : (
+          <Menu className="w-6 h-6 text-slate-700" />
+        )}
       </button>
+
+      {/* Mobile Navigation */}
+      <div
+        className={`lg:hidden fixed inset-0 top-[73px] bg-white/98 backdrop-blur-lg z-50 transition-all duration-300 ${
+          mobileOpen ? "opacity-100 visible" : "opacity-0 invisible"
+        }`}
+      >
+        <ul className="flex flex-col p-6 gap-2">
+          {navItems.map((item) => {
+            const isActive = pathname === item.href
+            return (
+              <li key={item.href}>
+                <Link
+                  href={item.href}
+                  onClick={() => setMobileOpen(false)}
+                  className={`block px-4 py-3 rounded-xl text-lg font-medium transition-all
+                    ${isActive 
+                      ? "bg-cyan-50 text-cyan-700" 
+                      : "text-slate-600 hover:text-cyan-700 hover:bg-cyan-50/50"
+                    }`}
+                >
+                  {item.label}
+                </Link>
+              </li>
+            )
+          })}
+
+          <li className="mt-4 pt-4 border-t border-slate-100">
+            {user ? (
+              <div className="flex flex-col gap-2">
+                <Link
+                  href="/intern"
+                  onClick={() => setMobileOpen(false)}
+                  className="px-4 py-3 bg-gradient-to-r from-cyan-500 to-teal-400 text-white text-center text-lg font-medium rounded-xl shadow-md"
+                >
+                  Intern
+                </Link>
+                <button
+                  onClick={() => {
+                    logout()
+                    setMobileOpen(false)
+                  }}
+                  className="px-4 py-3 text-lg font-medium text-slate-500 hover:text-slate-700 transition-colors"
+                >
+                  Abmelden
+                </button>
+              </div>
+            ) : (
+              <button
+                onClick={() => {
+                  setShowLogin(true)
+                  setMobileOpen(false)
+                }}
+                className="w-full px-4 py-3 text-lg font-medium text-cyan-700 bg-cyan-50 rounded-xl transition-colors"
+              >
+                Login
+              </button>
+            )}
+          </li>
+        </ul>
+      </div>
     </nav>
   )
 }

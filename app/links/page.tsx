@@ -1,162 +1,121 @@
 "use client"
 
 import { PageShell } from "@/components/page-shell"
+import { ExternalLink, Link2, Wrench, Heart, Building2, Camera, Waves, Store } from "lucide-react"
+
+const linkCategories = [
+  {
+    title: "Technisches",
+    icon: Wrench,
+    links: [
+      { name: "Wartungspreise Rehn", url: "https://ath-ev.de/wp-content/uploads/2023/01/2021_Rehn_Preisliste.pdf" },
+    ],
+  },
+  {
+    title: "Medizinisches",
+    icon: Heart,
+    links: [
+      { name: "Erste Hilfe Online (DRK)", url: "http://www.drk.de/angebote/erste-hilfe-und-rettung/erste-hilfe-online.html" },
+      { name: "Druckkammern und Tauchärzte (GTÜM)", url: "http://www.gtuem.org" },
+    ],
+  },
+  {
+    title: "Tauchorganisationen",
+    icon: Building2,
+    links: [
+      { name: "HTSB", url: "http://www.htsb-ev.de/" },
+      { name: "VDST", url: "http://www.vdst.de/" },
+      { name: "VDST Mediathek (Downloads)", url: "http://www.vdst.de/mediathek/downloads/versicherung-medizin.html" },
+      { name: "CMAS", url: "http://www.cmas.org/" },
+    ],
+  },
+  {
+    title: "Unterwasserfotos",
+    icon: Camera,
+    links: [
+      { name: "Nacktschnecken", url: "http://www.medslugs.de/E/Ind/select.htm" },
+      { name: "Jeff's Nudibranch Site", url: "http://divegallery.com/" },
+      { name: "Starfish", url: "http://www.starfish.ch/" },
+    ],
+  },
+  {
+    title: "Gewässerinformationen",
+    icon: Waves,
+    links: [
+      { name: "Hohendeicher See (Hamburg.de)", url: "https://www.hamburg.de/hohendeicher-see-sued/" },
+      { name: "Hohendeicher See Biodiversität", url: "http://www.hohendeichersee.info/" },
+    ],
+  },
+  {
+    title: "Tauchläden in Hamburg",
+    icon: Store,
+    links: [
+      { name: "Tauchen Hamburg", url: "http://www.tauchen-hamburg.de/index.php" },
+      { name: "Taucher-Zentrum Planet Scuba", url: "http://www.taucher-zentrum.de/" },
+      { name: "Bleckys Tauchservice", url: "http://www.bleckys-tauchservice.de/home.html" },
+      { name: "Aqua Mare Tauch- und Wassersportzentrum", url: "http://www.aqua-mare.de/" },
+    ],
+  },
+]
 
 export default function LinksPage() {
   return (
-    <PageShell backgroundImage="/links.png">
-      <div
-        className="h-[500px] max-[1000px]:h-[300px] bg-cover bg-top"
-        style={{ backgroundImage: "url('/links.png')" }}
-      />
-
-      <main
-        className="flex-1 px-8 py-0"
-        style={{
-          backgroundColor: "var(--bg-secondary)",
-          backdropFilter: "blur(20px)",
-          borderTop: "2px solid var(--border-color)",
-        }}
-      >
-        <h1
-          className="my-8 text-center text-[3rem] max-[800px]:text-[2.2rem] font-bold transition-colors duration-300"
-          style={{ color: "var(--text-accent)" }}
-        >
-          Links
-        </h1>
-
-        <div
-          className="text-left mx-[30%] max-[1000px]:mx-[20vw] max-[800px]:mx-[10%] max-[420px]:mx-8 text-[1.1rem] leading-relaxed mb-8 transition-colors duration-300"
-          style={{ color: "var(--text-link)" }}
-        >
-          <p className="mb-6">
-            Diese Liste erhebt keinen Anspruch auf Vollständigkeit. Wir übernehmen keine Verantwortung für
-            den Inhalt dieser Seiten oder folgender Links.
+    <PageShell>
+      <main className="flex-1">
+        {/* Hero */}
+        <div className="bg-gradient-to-b from-cyan-50 to-white py-12 md:py-16 text-center">
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-cyan-500 to-teal-400 mb-4 shadow-lg shadow-cyan-500/25">
+            <Link2 className="w-8 h-8 text-white" />
+          </div>
+          <h1 className="text-3xl md:text-4xl font-bold text-slate-800 mb-3">
+            Nützliche Links
+          </h1>
+          <p className="text-slate-600 max-w-xl mx-auto px-6">
+            Eine Sammlung hilfreicher Ressourcen rund ums Tauchen
           </p>
-
-          <h5 className="text-[1.4rem] uppercase font-bold mb-3 mt-6" style={{ color: "var(--text-primary)" }}>
-            Technisches
-          </h5>
-          <ul className="list-disc ml-12 mb-6">
-            <li>
-              <a href="https://ath-ev.de/wp-content/uploads/2023/01/2021_Rehn_Preisliste.pdf" target="_blank" rel="noopener noreferrer" className="underline" style={{ color: "inherit" }}>
-                Wartungspreise Rehn
-              </a>
-            </li>
-          </ul>
-
-          <h5 className="text-[1.4rem] uppercase font-bold mb-3 mt-6" style={{ color: "var(--text-primary)" }}>
-            Medizinisches
-          </h5>
-          <ul className="list-disc ml-12 mb-6">
-            <li>
-              <a href="http://www.drk.de/angebote/erste-hilfe-und-rettung/erste-hilfe-online.html" target="_blank" rel="noopener noreferrer" className="underline" style={{ color: "inherit" }}>
-                Erste Hilfe Online (Angebot des DRK)
-              </a>
-            </li>
-            <li>
-              <a href="http://www.gtuem.org" target="_blank" rel="noopener noreferrer" className="underline" style={{ color: "inherit" }}>
-                Verzeichnis Druckkammern und Tauchärzte (GTÜM e.V.)
-              </a>
-            </li>
-          </ul>
-
-          <h5 className="text-[1.4rem] uppercase font-bold mb-3 mt-6" style={{ color: "var(--text-primary)" }}>
-            Tauchorganisationen
-          </h5>
-          <ul className="list-disc ml-12 mb-6">
-            <li>
-              <a href="http://www.htsb-ev.de/" target="_blank" rel="noopener noreferrer" className="underline" style={{ color: "inherit" }}>
-                HTSB
-              </a>
-            </li>
-            <li>
-              <a href="http://www.vdst.de/" target="_blank" rel="noopener noreferrer" className="underline" style={{ color: "inherit" }}>
-                VDST
-              </a>
-              <ul className="list-disc ml-6">
-                <li>
-                  <a href="http://www.vdst.de/mediathek/downloads/versicherung-medizin.html" target="_blank" rel="noopener noreferrer" className="underline" style={{ color: "inherit" }}>
-                    VDST Mediathek (Downloads)
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <a href="http://www.cmas.org/" target="_blank" rel="noopener noreferrer" className="underline" style={{ color: "inherit" }}>
-                CMAS
-              </a>
-            </li>
-          </ul>
-
-          <h5 className="text-[1.4rem] uppercase font-bold mb-3 mt-6" style={{ color: "var(--text-primary)" }}>
-            Unterwasserfotos
-          </h5>
-          <ul className="list-disc ml-12 mb-6">
-            <li>
-              <a href="http://www.medslugs.de/E/Ind/select.htm" target="_blank" rel="noopener noreferrer" className="underline" style={{ color: "inherit" }}>
-                Nacktschnecken
-              </a>
-            </li>
-            <li>
-              <a href="http://divegallery.com/" target="_blank" rel="noopener noreferrer" className="underline" style={{ color: "inherit" }}>
-                {"Jeff's Nudibranch Site and Coral Reef Gallery (englisch)"}
-              </a>
-            </li>
-            <li>
-              <a href="http://www.starfish.ch/" target="_blank" rel="noopener noreferrer" className="underline" style={{ color: "inherit" }}>
-                Starfish (englisch)
-              </a>
-            </li>
-          </ul>
-
-          <h5 className="text-[1.4rem] uppercase font-bold mb-3 mt-6" style={{ color: "var(--text-primary)" }}>
-            GEWÄSSERINFORMATIONEN
-          </h5>
-          <ul className="list-disc ml-12 mb-6">
-            <li>
-              <strong>Hohendeicher See</strong>
-              <ul className="list-disc ml-6">
-                <li>
-                  <a href="https://www.hamburg.de/hohendeicher-see-sued/" target="_blank" rel="noopener noreferrer" className="underline" style={{ color: "inherit" }}>
-                    Gewässerinfo (Hamburg.de)
-                  </a>
-                </li>
-                <li>
-                  <a href="http://www.hohendeichersee.info/" target="_blank" rel="noopener noreferrer" className="underline" style={{ color: "inherit" }}>
-                    Biodiversität (u.a. Artenlexikon)
-                  </a>
-                </li>
-              </ul>
-            </li>
-          </ul>
-
-          <h5 className="text-[1.4rem] uppercase font-bold mb-3 mt-6" style={{ color: "var(--text-primary)" }}>
-            Ein paar der vielen Tauchläden in Hamburg
-          </h5>
-          <ul className="list-disc ml-12 mb-6">
-            <li>
-              <a href="http://www.tauchen-hamburg.de/index.php" target="_blank" rel="noopener noreferrer" className="underline" style={{ color: "inherit" }}>
-                Tauchen Hamburg
-              </a>
-            </li>
-            <li>
-              <a href="http://www.taucher-zentrum.de/" target="_blank" rel="noopener noreferrer" className="underline" style={{ color: "inherit" }}>
-                Taucher-Zentrum Planet Scuba
-              </a>
-            </li>
-            <li>
-              <a href="http://www.bleckys-tauchservice.de/home.html" target="_blank" rel="noopener noreferrer" className="underline" style={{ color: "inherit" }}>
-                Bleckys Tauchservice
-              </a>
-            </li>
-            <li>
-              <a href="http://www.aqua-mare.de/" target="_blank" rel="noopener noreferrer" className="underline" style={{ color: "inherit" }}>
-                Aqua Mare Tauch- und Wassersportzentrum
-              </a>
-            </li>
-          </ul>
         </div>
+
+        {/* Disclaimer */}
+        <div className="max-w-4xl mx-auto px-6 py-6">
+          <div className="bg-slate-50 border border-slate-100 rounded-xl p-4 text-sm text-slate-500 text-center">
+            Diese Liste erhebt keinen Anspruch auf Vollständigkeit. Wir übernehmen keine 
+            Verantwortung für den Inhalt verlinkter Seiten.
+          </div>
+        </div>
+
+        {/* Links Grid */}
+        <section className="max-w-6xl mx-auto px-6 pb-16 md:pb-24">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {linkCategories.map((category) => (
+              <div
+                key={category.title}
+                className="bg-white rounded-2xl border border-slate-100 p-6 hover:border-cyan-200 hover:shadow-lg transition-all"
+              >
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-50 to-teal-50 flex items-center justify-center">
+                    <category.icon className="w-5 h-5 text-cyan-600" />
+                  </div>
+                  <h2 className="font-semibold text-slate-800">{category.title}</h2>
+                </div>
+                <ul className="space-y-2">
+                  {category.links.map((link) => (
+                    <li key={link.name}>
+                      <a
+                        href={link.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 text-sm text-slate-600 hover:text-cyan-600 transition-colors group"
+                      >
+                        <ExternalLink className="w-3.5 h-3.5 opacity-50 group-hover:opacity-100" />
+                        <span className="group-hover:underline">{link.name}</span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </section>
       </main>
     </PageShell>
   )
