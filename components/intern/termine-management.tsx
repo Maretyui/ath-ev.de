@@ -141,7 +141,7 @@ function TerminFormModal({
             <small style={{ color: "var(--text-tertiary)" }}>
               {termin
                 ? "Nur auswaehlen, wenn Sie das Bild aendern moechten"
-                : "Unterstuetzte Formate: JPEG, PNG, GIF, WebP (max. 5MB)"}
+                : "Unterstuetzte Formate: JPG (max. 5MB)"}
             </small>
           </div>
           <div className="flex gap-3 justify-end mt-5">

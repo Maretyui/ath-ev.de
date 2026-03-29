@@ -142,7 +142,7 @@ function BerichtFormModal({
             <small style={{ color: "var(--text-tertiary)" }}>
               {bericht
                 ? "Nur auswaehlen, wenn Sie das Bild aendern moechten"
-                : "Unterstuetzte Formate: JPEG, PNG, GIF, WebP (max. 5MB)"}
+                : "Unterstuetzte Formate: JPG (max. 5MB)"}
             </small>
           </div>
           <div className="mb-5">

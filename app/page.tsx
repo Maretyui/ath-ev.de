@@ -5,7 +5,7 @@ import { PageShell } from "@/components/page-shell"
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "SportsClub",
-  name: "Aquanautic-Taucher Hamburg e.V.",
+  name: "Aquanautik-Taucher Hamburg e.V.",
   alternateName: "ATH",
   url: "https://ath-ev.de",
   description:
@@ -36,7 +36,7 @@ export default function HomePage() {
             className="text-[3.5rem] max-[1000px]:text-[2.5rem] font-light tracking-[2px] leading-[1.2]"
             style={{ color: "white", textShadow: "2px 2px 8px rgba(0,0,0,0.7)" }}
           >
-            Aquanautic<br />Taucher<br />Hamburg e.V.
+            Aquanautik<br />Taucher<br />Hamburg e.V.
           </div>
         </div>
       </div>
@@ -61,7 +61,7 @@ export default function HomePage() {
           style={{ color: "var(--text-link)" }}
         >
           <br /><br />
-          Die Aquanautic Taucher Hamburg sind einer der ältesten Tauchvereine Hamburgs. Seit mehr als 40
+          Die Aquanautik Taucher Hamburg sind einer der ältesten Tauchvereine Hamburgs. Seit mehr als 40
           Jahren pflegen wir unsere Tradition als Familienverein. Wollt ihr euch sportlich engagieren, ohne die
           Familie zu vernachlässigen? Oder sucht euer Nachwuchs nach einer neuen Herausforderung? Unser Training und
           Ausfahrten berücksichtigen die Interessen von Eltern und Kindern – unabhängig, ob alle tauchen oder nur
