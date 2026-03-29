@@ -13,6 +13,7 @@ const navItems = [
   { href: "/tauchspots", label: "Tauchspots" },
   { href: "/termine", label: "Termine" },
   { href: "/links", label: "Links" },
+  { href: "/kontakt", label: "Kontakt" },
 ]
 
 export function Navbar() {
@@ -39,7 +40,7 @@ export function Navbar() {
       {/* Logo */}
       <Link href="/" className="no-underline">
         <span className="text-2xl font-bold text-slate-900 tracking-tight">
-          ATH
+          ATH <span className="text-slate-400 font-normal text-base">e.V.</span>
         </span>
       </Link>
 
