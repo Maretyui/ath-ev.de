@@ -1,0 +1,116 @@
+# Progress Tracker - ATH Website
+
+## Current Phase
+
+**Phase 4 — Public Pages & Layout** — in progress.
+
+## Current Goal
+
+Implement public-facing pages: landing, berichte, termine, links, grundausbildung, verein, and the sticky navbar/footer layout.
+
+## Completed
+
+- ✅ Rewrote `project-overview.md` with diving club project definition, goals, features, and scope
+- ✅ Rewrote `architecture-context.md` with Next.js + Prisma stack, API boundaries, storage model, and security model
+- ✅ Rewrote `ui-context.md` with light/dark theme, color palette, typography, layout patterns for parent-friendly audience
+- ✅ Rewrote `code-standards.md` with TypeScript, Next.js, Tailwind, Prisma, and API route standards
+- ✅ Rewrote `ai-workflow-rules.md` with development workflow, scoping rules, and testing approach
+- ✅ Created implementation plan with 7 phases and 23 todos
+
+### Phase 1 — Design System & UI Setup
+
+- ✅ Initialized shadcn/ui (`npx shadcn@latest init --defaults`) — detected Tailwind v4 automatically
+- ✅ Added shadcn components: Button, Card, Dialog, Input, Select, Textarea, Table, Tabs, DropdownMenu, Sheet, Label, Badge
+- ✅ Installed `lucide-react`
+- ✅ `lib/utils.ts` created by shadcn with `cn()` helper (clsx + tailwind-merge)
+- ✅ `app/globals.css` — replaced default palette with full ATH design system:
+  - shadcn tokens mapped to ATH light/dark palette (--primary = brand blue, --foreground = body text, etc.)
+  - ATH brand tokens added: `--brand-primary`, `--brand-secondary`, `--brand-tertiary`, `--state-error/success/warning`
+  - Tailwind `@theme inline` maps both shadcn and ATH tokens to utility classes
+- ✅ `hooks/useTheme.ts` — client-side hook: reads localStorage, applies `.dark` class to `<html>`, exposes `toggle()`
+- ✅ `components/layout/theme-script.tsx` — blocking `<script>` injected in `<head>` to prevent flash-of-wrong-theme
+- ✅ `app/layout.tsx` — updated metadata (German), `lang="de"`, injected ThemeScript
+- ✅ `npm run build` passes with no errors
+
+### Phase 2 — Prisma Schema & Database
+
+- ✅ Installed `prisma` (dev) and `@prisma/client` (prod)
+- ✅ Initialized Prisma v7 (`npx prisma init`) — generates `prisma/schema.prisma` + `prisma.config.ts` + `.env`
+- ✅ Defined all 4 models in `prisma/schema.prisma`: User (Role enum), Member, Bericht, Termin — with correct relations, cascade deletes, and indexes
+- ✅ `lib/prisma.ts` — singleton using `@prisma/adapter-pg` (Prisma v7 Driver Adapter pattern)
+- ✅ `npx prisma generate` — Prisma Client generated to `lib/generated/prisma/`
+- ✅ `npx prisma migrate dev --name init` — migration applied, all 4 tables created in `ath_db` on `192.168.178.43`
+- ✅ `npm run build` passes with no type errors
+
+### Phase 3 — Authentication API
+
+- ✅ Installed `jsonwebtoken`, `bcryptjs`, `@types/jsonwebtoken`, `@types/bcryptjs`
+- ✅ Added `JWT_SECRET`, `JWT_EXPIRY`, `REFRESH_EXPIRY` to `.env`
+- ✅ `lib/types.ts` — `JwtPayload` and `AuthUser` interfaces
+- ✅ `lib/validation.ts` — Zod schemas: `loginSchema`, `registerSchema`, `changePasswordSchema`
+- ✅ `lib/auth.ts` — `createTokens`, `verifyToken`, `hashPassword`, `verifyPassword`
+- ✅ `lib/abac.ts` — `hasRole`, `canViewMembers`, `canEditMembers`, `canPublishContent`, `canManageUsers`
+- ✅ `app/api/auth/login/route.ts` — POST: validate, bcrypt verify, issue JWT + refresh cookie
+- ✅ `app/api/auth/register/route.ts` — POST: validate, create user, issue tokens
+- ✅ `app/api/auth/logout/route.ts` — POST: clear both cookies
+- ✅ `app/api/auth/refresh/route.ts` — POST: validate refresh token, issue new JWT
+- ✅ `app/api/auth/change-password/route.ts` — POST: JWT-gated, bcrypt verify + update
+- ✅ `app/api/auth/me/route.ts` — GET: return user from JWT
+- ✅ `npm run build` passes with no errors
+
+### Phase 4a — ABAC Proxy (spec 04-abac-auth.md)
+
+- ✅ `lib/abac.ts` extended with `canEditResource(userId, resourceOwnerId, role)` — resource-level ownership check
+- ✅ `proxy.ts` created at project root — JWT verification for all protected routes:
+  - API routes (`/api/members/*`, `/api/berichte/*`, `/api/termine/*`, `/api/users/*`) → 401 JSON on missing/invalid token
+  - Page routes (`/intern/*` excluding `/intern`, `/intern/login`, `/intern/register`) → redirect to `/intern`
+  - Auth cookies are named `authToken` (access) and `refreshToken` (refresh)
+- ✅ `npm run build` passes — proxy recognized as `ƒ Proxy (Middleware)` in build output
+
+- ✅ Implemented `components/layout/navbar.tsx`, `components/layout/footer.tsx`, and `app/layout.tsx` with sticky navbar/footer, theme toggle, and responsive mobile navigation.
+- ✅ Implemented `app/page.tsx` landing page with hero, welcome section, feature cards, and CTA.
+- ✅ Implemented public Berichte pages and safe markdown rendering (`/berichte`, `/berichte/[id]`).
+- ✅ Implemented Berichte API routes for list and detail retrieval.
+- ✅ `npm run build` passes after the latest public Berichte implementation
+
+## In Progress
+
+- None
+
+## Next Up
+
+**Phase 4: Public Pages & Layout**
+1. ✅ Create `app/(public)/berichte/page.tsx` + `[id]/page.tsx`
+2. ✅ Create `app/(public)/termine/page.tsx` + `[id]/page.tsx`
+3. ✅ Create `app/grundausbildung/andreas/page.tsx` + `app/grundausbildung/maik/page.tsx`
+4. Create placeholder pages: links, grundausbildung, verein, impressum, datenschutz, kontakt
+
+## Open Questions
+
+- Should berichte and termine be sortable/filterable on the public pages? → TBD
+
+## Architecture Decisions
+
+- **Authentication**: JWT with HTTP-only cookies (stateless, scalable)
+- **Passwords**: Bcrypt with cost 12 (secure standard)
+- **Authorization**: ABAC (Attribute-Based Access Control) with 4 roles
+- **Theme**: Light/Dark mode — `.dark` class toggled on `<html>`, stored in localStorage, blocking script prevents flash
+- **Styling**: CSS custom properties with shadcn token conventions (see `code-standards.md` for class name mapping)
+- **shadcn/ui**: Tailwind v4 mode — no `tailwind.config.js`, uses `@theme inline` in `globals.css`
+- **Database**: PostgreSQL with Prisma ORM (type-safe, migrations)
+- **Public Pages**: No authentication required (good for SEO)
+- **Protected Pages**: JWT validation via middleware, role checks in handlers
+
+## Session Notes
+
+- Next.js version: 16.2.4 (uses `proxy.ts` instead of `middleware.ts`)
+- React: 19.2.4
+- Tailwind: v4 (no config file, PostCSS plugin only)
+- shadcn/ui init auto-detected Tailwind v4 and wrote correct `globals.css` structure
+- Tailwind class naming: uses shadcn conventions (`bg-background`, `text-foreground`, etc.) — `code-standards.md` updated to reflect this
+- **Database connection:** host `192.168.178.43:5432`, db `ath_db`, user `ath_user` — full `DATABASE_URL` in `.env` (not committed)
+- **Prisma v7 breaking changes:**
+  - `prisma.config.ts` replaces datasource URL in `schema.prisma`
+  - `PrismaClient` requires either `adapter` (Driver Adapter) or `accelerateUrl` — no more `DATABASE_URL` auto-read
+  - Client generates to `lib/generated/prisma/` — import from `./generated/prisma/client`
+  - Use `@prisma/adapter-pg` + `pg` for direct PostgreSQL connections

@@ -1,65 +1,141 @@
-import Image from "next/image";
+import Link from "next/link";
+import { buttonVariants } from "@/components/ui/button";
+
+const heroImage =
+  "/quallen.png";
+
+const welcomeText = `Die Aquanautic Taucher Hamburg sind einer der ältesten Tauchvereine Hamburgs. Seit mehr als 40 Jahren pflegen wir unsere Tradition als Familienverein. Wollt ihr euch sportlich engagieren, ohne die Familie zu vernachlässigen? Oder sucht euer Nachwuchs nach einer neuen Herausforderung? Unser Training und Ausfahrten berücksichtigen die Interessen von Eltern und Kindern – unabhängig, ob alle tauchen oder nur einer.
+
+Selbstverständlich ist jeder herzlich eingeladen, mit uns in zwei Hamburger Schwimmbädern zu trainieren. Oder kommt doch einmal zu unserem regelmäßigen Freiwasser-Tauchen im Oortkatensee.
+
+Ihr habt noch keinen Anzug, Atemregler oder Flaschen? Zahlreiche Ausrüstungen stehen euch – ebenso wie ein eigener Bauer-Kompressor – in unserem Vereinsraum in Billbrook zur Verfügung.
+
+Wir hoffen sehr, dass wir unseren Verein bald persönlich präsentieren können, wie er uns über all die Jahre ans Herz gewachsen ist. Mit intensiven, fundierten Ausbildungen, Tagesausflügen an die Ostsee, Trainingswochenenden in Hemmoor und dem Pfingstlager am Schweriner See.
+
+Wir freuen uns über jedes neue (und alte) Gesicht …`;
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <div className="bg-background text-foreground">
+      <section
+        className="relative flex min-h-[60vh] items-center"
+        style={{
+          backgroundImage: `linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)), url('${heroImage}')`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
+        <div className="absolute inset-0 bg-black/30" />
+        <div className="relative mx-auto flex w-full max-w-[1200px] flex-col gap-8 px-6 py-16 sm:px-8 lg:px-10">
+          <div className="max-w-3xl text-white">
+            <p className="mb-4 text-sm uppercase tracking-[0.4em] text-white/70">
+              Aquanautic Taucher Hamburg e.V.
+            </p>
+            <h1 className="text-4xl font-bold leading-tight sm:text-5xl">
+              Willkommen bei ATH
+            </h1>
+            <p className="mt-6 max-w-2xl text-base leading-8 text-slate-100 sm:text-lg">
+              Erleben Sie den Einstieg in den Tauchsport mit erfahrenen Ausbildern, moderner Ausrüstung und einer Gemeinschaft, die Sie sicher ins Wasser begleitet.
+            </p>
+          </div>
+
+          <div className="flex flex-wrap gap-4">
+            <Link
+              href="#about"
+              className={`${buttonVariants({ variant: "default", size: "lg" })} inline-flex`}
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+              Mehr erfahren
+            </Link>
+            <Link
+              href="/intern"
+              className={`${buttonVariants({ variant: "outline", size: "lg" })} inline-flex dark:text-white text-black`}
             >
-              Learning
-            </a>{" "}
-            center.
+              Jetzt Propetraining vereinbaren
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <section id="about" className="bg-background py-16">
+        <div className="mx-auto max-w-[1200px] px-6 sm:px-8 lg:px-10">
+          <div className="max-w-4xl">
+            <h2 className="text-3xl font-bold text-primary sm:text-4xl">
+              Über uns
+            </h2>
+            <p className="mt-6 text-base leading-8 text-foreground sm:text-lg">
+              {welcomeText}
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-surface py-16">
+        <div className="mx-auto max-w-[1200px] px-6 sm:px-8 lg:px-10">
+          <div className="grid gap-6 lg:grid-cols-3">
+            <article className="rounded-3xl border border-border bg-card p-6 shadow-sm">
+              <p className="text-sm font-medium uppercase tracking-[0.25em] text-muted-foreground">
+                Grundausbildung
+              </p>
+              <h3 className="mt-4 text-xl font-semibold text-foreground">
+                Sicher starten und wachsen
+              </h3>
+              <p className="mt-3 text-sm leading-7 text-muted-foreground">
+                Unsere Kurse bieten eine praxisnahe Tauchausbildung für Kinder und Jugendliche. Wir legen Wert auf Sicherheit, Teamgeist und nachhaltigen Umgang mit der Unterwasserwelt.
+              </p>
+            </article>
+
+            <article className="rounded-3xl border border-border bg-card p-6 shadow-sm">
+              <p className="text-sm font-medium uppercase tracking-[0.25em] text-muted-foreground">
+                Gemeinschaft
+              </p>
+              <h3 className="mt-4 text-xl font-semibold text-foreground">
+                Gemeinsam tauchen, gemeinsam erleben
+              </h3>
+              <p className="mt-3 text-sm leading-7 text-muted-foreground">
+                ATH ist ein Treffpunkt für Familien, Freunde und neue Mitglieder. Bei Veranstaltungen und Ausfahrten entdecken wir die Faszination des Tauchens zusammen.
+              </p>
+            </article>
+
+            <article className="rounded-3xl border border-border bg-card p-6 shadow-sm">
+              <p className="text-sm font-medium uppercase tracking-[0.25em] text-muted-foreground">
+                Termine
+              </p>
+              <h3 className="mt-4 text-xl font-semibold text-foreground">
+                Nächste Aktivitäten im Blick
+              </h3>
+              <p className="mt-3 text-sm leading-7 text-muted-foreground">
+                Entdecken Sie unsere kommenden Trainings, Clubabende und Events. Bleiben Sie informiert und planen Sie Ihr nächstes Tauchabenteuer mit ATH.
+              </p>
+              <Link
+                href="/termine"
+                className={`${buttonVariants({ variant: "link", size: "sm" })} mt-6 inline-flex text-primary`}
+              >
+                Zu den Terminen
+              </Link>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-card py-16">
+        <div className="mx-auto max-w-[1200px] px-6 sm:px-8 lg:px-10 text-center">
+          <p className="text-sm uppercase tracking-[0.35em] text-muted-foreground">
+            Noch Fragen?
           </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+          <h2 className="mt-4 text-3xl font-bold text-foreground sm:text-4xl">
+            Möchten Sie an einem Propetraining teilnehmen oder haben Sie Fragen zu unserem Verein?
+          </h2>
+          <p className="mx-auto mt-4 max-w-2xl text-base leading-8 text-muted-foreground sm:text-lg">
+            Kontaktieren Sie uns und wir besprechen gemeinsam Ihre Möglichkeiten im Tauchsportverein ATH.
+          </p>
+          <Link
+            href="/kontakt"
+            className={`${buttonVariants({ variant: "default", size: "lg" })} mt-8 inline-flex`}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+            Kontakt aufnehmen
+          </Link>
         </div>
-      </main>
+      </section>
     </div>
   );
 }
