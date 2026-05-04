@@ -40,7 +40,7 @@ export function MemberForm({
   member,
   mode,
 }: MemberFormProps) {
-  const [formData, setFormData] = useState<Omit<MemberData, "id">>({
+  const getInitialFormData = (): Omit<MemberData, "id"> => ({
     name: member?.name ?? "",
     street: member?.street ?? "",
     plz: member?.plz ?? "",
@@ -50,8 +50,14 @@ export function MemberForm({
     geburtstag: member?.geburtstag ?? "",
     jugend: member?.jugend ?? false,
   });
+
+  const [formData, setFormData] = useState<Omit<MemberData, "id">>(
+    getInitialFormData()
+  );
   const [error, setError] = useState("");
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
+
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value, type, checked } = e.target;
@@ -59,11 +65,20 @@ export function MemberForm({
       ...prev,
       [name]: type === "checkbox" ? checked : value,
     }));
+    // Clear field error when user starts typing
+    if (fieldErrors[name]) {
+      setFieldErrors((prev) => {
+        const next = { ...prev };
+        delete next[name];
+        return next;
+      });
+    }
   }
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setError("");
+    setFieldErrors({});
     setLoading(true);
 
     const url =
@@ -80,15 +95,32 @@ export function MemberForm({
       const data = await res.json();
 
       if (!res.ok || !data.success) {
-        setError(data.error || "Speichern fehlgeschlagen");
+        // Handle validation errors with field details
+        if (data.details && typeof data.details === "object") {
+          const errors: Record<string, string> = {};
+          for (const [field, messages] of Object.entries(data.details)) {
+            errors[field] = Array.isArray(messages)
+              ? (messages as string[])[0]
+              : String(messages);
+          }
+          setFieldErrors(errors);
+          setError("Bitte überprüfe die hervorgehobenen Felder");
+        } else {
+          setError(data.error || "Speichern fehlgeschlagen");
+        }
         setLoading(false);
         return;
       }
 
+      setFormData(getInitialFormData());
+      setFieldErrors({});
+      setError("");
       onSuccess();
       onClose();
-    } catch {
-      setError("Ein Fehler ist aufgetreten");
+    } catch (err) {
+      setError(
+        err instanceof Error ? err.message : "Ein Fehler ist aufgetreten"
+      );
       setLoading(false);
     }
   }
@@ -117,7 +149,14 @@ export function MemberForm({
               value={formData.name}
               onChange={handleChange}
               required
+              className={fieldErrors.name ? "border-destructive" : ""}
+              aria-describedby={fieldErrors.name ? "name-error" : undefined}
             />
+            {fieldErrors.name && (
+              <p id="name-error" className="text-sm text-destructive">
+                {fieldErrors.name}
+              </p>
+            )}
           </div>
 
           <div className="space-y-2">
@@ -128,7 +167,14 @@ export function MemberForm({
               value={formData.street}
               onChange={handleChange}
               required
+              className={fieldErrors.street ? "border-destructive" : ""}
+              aria-describedby={fieldErrors.street ? "street-error" : undefined}
             />
+            {fieldErrors.street && (
+              <p id="street-error" className="text-sm text-destructive">
+                {fieldErrors.street}
+              </p>
+            )}
           </div>
 
           <div className="grid grid-cols-2 gap-4">
@@ -140,7 +186,14 @@ export function MemberForm({
                 value={formData.plz}
                 onChange={handleChange}
                 required
+                className={fieldErrors.plz ? "border-destructive" : ""}
+                aria-describedby={fieldErrors.plz ? "plz-error" : undefined}
               />
+              {fieldErrors.plz && (
+                <p id="plz-error" className="text-sm text-destructive">
+                  {fieldErrors.plz}
+                </p>
+              )}
             </div>
             <div className="space-y-2">
               <Label htmlFor="ort">Ort *</Label>
@@ -150,7 +203,14 @@ export function MemberForm({
                 value={formData.ort}
                 onChange={handleChange}
                 required
+                className={fieldErrors.ort ? "border-destructive" : ""}
+                aria-describedby={fieldErrors.ort ? "ort-error" : undefined}
               />
+              {fieldErrors.ort && (
+                <p id="ort-error" className="text-sm text-destructive">
+                  {fieldErrors.ort}
+                </p>
+              )}
             </div>
           </div>
 
@@ -162,7 +222,16 @@ export function MemberForm({
               value={formData.telefon}
               onChange={handleChange}
               required
+              className={fieldErrors.telefon ? "border-destructive" : ""}
+              aria-describedby={
+                fieldErrors.telefon ? "telefon-error" : undefined
+              }
             />
+            {fieldErrors.telefon && (
+              <p id="telefon-error" className="text-sm text-destructive">
+                {fieldErrors.telefon}
+              </p>
+            )}
           </div>
 
           <div className="space-y-2">
@@ -174,7 +243,14 @@ export function MemberForm({
               value={formData.email}
               onChange={handleChange}
               required
+              className={fieldErrors.email ? "border-destructive" : ""}
+              aria-describedby={fieldErrors.email ? "email-error" : undefined}
             />
+            {fieldErrors.email && (
+              <p id="email-error" className="text-sm text-destructive">
+                {fieldErrors.email}
+              </p>
+            )}
           </div>
 
           <div className="space-y-2">
@@ -185,7 +261,16 @@ export function MemberForm({
               type="date"
               value={formData.geburtstag}
               onChange={handleChange}
+              className={fieldErrors.geburtstag ? "border-destructive" : ""}
+              aria-describedby={
+                fieldErrors.geburtstag ? "geburtstag-error" : undefined
+              }
             />
+            {fieldErrors.geburtstag && (
+              <p id="geburtstag-error" className="text-sm text-destructive">
+                {fieldErrors.geburtstag}
+              </p>
+            )}
           </div>
 
           <div className="flex items-center gap-2">

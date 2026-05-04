@@ -1,9 +1,10 @@
 import { cookies } from "next/headers";
 import { prisma } from "@/lib/prisma";
 import { verifyToken } from "@/lib/auth";
+import { profileSchema } from "@/lib/validation";
 import { handleError, unauthorizedResponse } from "@/lib/api";
 
-export async function GET() {
+export async function PUT(request: Request) {
   try {
     const cookieStore = await cookies();
     const token = cookieStore.get("authToken")?.value;
@@ -13,14 +14,17 @@ export async function GET() {
     }
 
     const payload = verifyToken(token);
-    const user = await prisma.user.findUnique({
+
+    const body = await request.json();
+    const { username } = profileSchema.parse(body);
+
+    const user = await prisma.user.update({
       where: { id: payload.userId },
-      select: { id: true, email: true, role: true, username: true },
+      data: { username },
+      select: { id: true, email: true, username: true },
     });
-    if (!user) {
-      return unauthorizedResponse();
-    }
-    return Response.json({ success: true, user });
+
+    return Response.json({ success: true, data: user });
   } catch (error) {
     return handleError(error);
   }

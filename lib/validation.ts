@@ -21,8 +21,12 @@ export const changePasswordSchema = z.object({
   newPassword: strongPassword,
 });
 
+export const profileSchema = z.object({
+  username: z.string().min(2, "Username must be at least 2 characters").max(50, "Username must be at most 50 characters"),
+});
+
 export const terminSchema = z.object({
-  title: z.string().min(5, "Title must be at least 5 characters").max(120, "Title is too long"),
+  title: z.string().min(1, "Title required").max(120, "Title is too long"),
   date: z.string().regex(/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/, "Date must be YYYY-MM-DD"),
   time: z.string().min(4, "Time is required").max(5, "Time is invalid"),
   location: z.string().min(3, "Location is required").max(120, "Location is too long"),
@@ -42,3 +46,9 @@ export const memberSchema = z.object({
 });
 
 export const memberUpdateSchema = memberSchema.partial();
+
+export const berichtSchema = z.object({
+  title: z.string().min(1, "Title required").max(200, "Title is too long"),
+  content: z.string().min(1, "Content required"),
+  image: z.string().url("Image must be a valid URL").optional().or(z.literal("")),
+});

@@ -2,7 +2,7 @@ import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
 
 const heroImage =
-  "/quallen.png";
+  "/image.png";
 
 const welcomeText = `Die Aquanautic Taucher Hamburg sind einer der ältesten Tauchvereine Hamburgs. Seit mehr als 40 Jahren pflegen wir unsere Tradition als Familienverein. Wollt ihr euch sportlich engagieren, ohne die Familie zu vernachlässigen? Oder sucht euer Nachwuchs nach einer neuen Herausforderung? Unser Training und Ausfahrten berücksichtigen die Interessen von Eltern und Kindern – unabhängig, ob alle tauchen oder nur einer.
 
@@ -29,13 +29,13 @@ export default function Home() {
         <div className="relative mx-auto flex w-full max-w-[1200px] flex-col gap-8 px-6 py-16 sm:px-8 lg:px-10">
           <div className="max-w-3xl text-white">
             <p className="mb-4 text-sm uppercase tracking-[0.4em] text-white/70">
-              Aquanautic Taucher Hamburg e.V.
+              Aquanautik Taucher Hamburg e.V.
             </p>
             <h1 className="text-4xl font-bold leading-tight sm:text-5xl">
-              Willkommen bei ATH
+              Willkommen beim ATH
             </h1>
             <p className="mt-6 max-w-2xl text-base leading-8 text-slate-100 sm:text-lg">
-              Erleben Sie den Einstieg in den Tauchsport mit erfahrenen Ausbildern, moderner Ausrüstung und einer Gemeinschaft, die Sie sicher ins Wasser begleitet.
+              Erlebe den Einstieg in den Tauchsport mit erfahrenen Ausbildern, moderner Ausrüstung und einer Gemeinschaft, die Dich sicher ins Wasser begleitet.
             </p>
           </div>
 
@@ -50,7 +50,7 @@ export default function Home() {
               href="/intern"
               className={`${buttonVariants({ variant: "outline", size: "lg" })} inline-flex dark:text-white text-black`}
             >
-              Jetzt Propetraining vereinbaren
+              Jetzt Probetraining vereinbaren
             </Link>
           </div>
         </div>
@@ -104,7 +104,7 @@ export default function Home() {
                 Nächste Aktivitäten im Blick
               </h3>
               <p className="mt-3 text-sm leading-7 text-muted-foreground">
-                Entdecken Sie unsere kommenden Trainings, Clubabende und Events. Bleiben Sie informiert und planen Sie Ihr nächstes Tauchabenteuer mit ATH.
+                Entdecke unsere kommenden Trainings, Clubabende und Events. Bleibe informiert und plane Dein nächstes Tauchabenteuer mit ATH.
               </p>
               <Link
                 href="/termine"
@@ -123,10 +123,10 @@ export default function Home() {
             Noch Fragen?
           </p>
           <h2 className="mt-4 text-3xl font-bold text-foreground sm:text-4xl">
-            Möchten Sie an einem Propetraining teilnehmen oder haben Sie Fragen zu unserem Verein?
+            Möchtest Du an einem Probetraining teilnehmen oder hast Fragen zu unserem Verein?
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-base leading-8 text-muted-foreground sm:text-lg">
-            Kontaktieren Sie uns und wir besprechen gemeinsam Ihre Möglichkeiten im Tauchsportverein ATH.
+            Kontaktiere uns und wir besprechen gemeinsam Deine Möglichkeiten im ATH.
           </p>
           <Link
             href="/kontakt"

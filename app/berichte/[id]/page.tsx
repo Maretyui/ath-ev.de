@@ -13,10 +13,11 @@ function formatPublishedAt(date: Date) {
   }).format(date);
 }
 
-export default async function BerichtDetailPage({ params }: { params: { id: string } }) {
+export default async function BerichtDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   const bericht = await prisma.bericht.findUnique({
-    where: { id: params.id },
-    include: { publisher: { select: { email: true } } },
+    where: { id },
+    include: { publisher: { select: { email: true, username: true } } },
   });
 
   if (!bericht) {
@@ -42,28 +43,25 @@ export default async function BerichtDetailPage({ params }: { params: { id: stri
           </h1>
           <div className="flex flex-col gap-2 text-sm text-muted-foreground sm:flex-row sm:items-center sm:gap-4">
             <span>Veröffentlicht am {formatPublishedAt(bericht.publishedAt)}</span>
-            <span>|</span>
-            <span>Autor: {bericht.publisher.email}</span>
+            <span>-</span>
+            <span>Autor: {bericht.publisher.username ?? bericht.publisher.email}</span>
           </div>
         </div>
 
-        <div className="overflow-hidden rounded-3xl border border-border bg-muted">
-          <img
-            src={bericht.image}
-            alt={bericht.title}
-            className="h-80 w-full object-cover"
-          />
-        </div>
+        {bericht.image && (
+          <div className="overflow-hidden rounded-3xl border border-border bg-muted">
+            <img
+              src={bericht.image}
+              alt={bericht.title}
+              className="h-80 w-full object-cover"
+            />
+          </div>
+        )}
 
-        <article className="space-y-6 text-base leading-8 text-foreground">
-          <div className="prose max-w-none [&_*]:text-foreground [&_*]:max-w-none" dangerouslySetInnerHTML={{ __html: bodyHtml }} />
-        </article>
-
-        <div className="rounded-3xl bg-muted p-6 text-sm text-muted-foreground">
-          <p>
-            Dieser Bericht wurde von einem unserer Vereinsverantwortlichen veröffentlicht. Wenn du Fragen zur Veranstaltung oder zum Inhalt hast, melde dich gern bei uns.
-          </p>
-        </div>
+        <article
+          className="text-base leading-8 text-foreground [&_h2]:mb-2 [&_h2]:mt-8 [&_h2]:text-2xl [&_h2]:font-bold [&_h3]:mb-2 [&_h3]:mt-6 [&_h3]:text-xl [&_h3]:font-semibold [&_h4]:mb-1 [&_h4]:mt-4 [&_h4]:text-lg [&_h4]:font-medium [&_p]:mb-4 [&_p]:leading-relaxed [&_strong]:font-bold [&_em]:italic [&_ul]:mb-4 [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:mb-4 [&_ol]:list-decimal [&_ol]:pl-5 [&_li]:mb-1.5 [&_a]:text-primary [&_a]:underline [&_blockquote]:my-4 [&_blockquote]:border-l-4 [&_blockquote]:border-border [&_blockquote]:pl-4 [&_blockquote]:italic [&_blockquote]:text-muted-foreground [&_code]:rounded [&_code]:bg-muted [&_code]:px-1 [&_code]:font-mono [&_code]:text-sm [&_pre]:my-4 [&_pre]:overflow-x-auto [&_pre]:rounded-lg [&_pre]:bg-muted [&_pre]:p-4 [&_img]:my-4 [&_img]:max-w-full [&_img]:rounded-lg"
+          dangerouslySetInnerHTML={{ __html: bodyHtml }}
+        />
       </div>
 
       <div className="mx-auto max-w-6xl space-y-6">

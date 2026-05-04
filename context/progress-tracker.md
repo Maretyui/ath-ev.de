@@ -86,6 +86,41 @@ Implement public-facing pages: landing, berichte, termine, links, grundausbildun
 - ✅ Created `app/intern/page.tsx` — landing page with quick links to login
 - ✅ `npm run build` passes with no errors
 
+### Phase 6 — Publisher Dashboard (spec 11-publisher-dashboard.md)
+
+- ✅ Added `berichtSchema` to `lib/validation.ts` (Zod v4: uses `.issues` not `.errors`)
+- ✅ `app/api/berichte/route.ts` — added POST handler (publisher+ ABAC) + `publisherId` filter on GET
+- ✅ `app/api/berichte/[id]/route.ts` — added PUT + DELETE handlers with ownership check
+- ✅ `app/api/termine/route.ts` — added `createdById` filter on GET
+- ✅ `components/dashboard/bericht-form.tsx` — Dialog form for create/edit Berichte
+- ✅ `components/dashboard/termin-form.tsx` — Dialog form for create/edit Termine
+- ✅ `app/intern/dashboard/page.tsx` — two-tab dashboard (Berichte | Termine) with access guard, CRUD actions, delete confirmation
+- ✅ `npm run build` passes with no errors
+
+### Phase 7 — API Input Validation & Error Handling (spec 13-validation-errors.md)
+
+- ✅ Created `handleError()` utility in `lib/api.ts` — unified error handler for Zod validation and other errors
+- ✅ Added `profileSchema` to `lib/validation.ts` for username validation on profile updates
+- ✅ Refactored all 14 API routes to use single outer try/catch with Zod `.parse()` instead of `.safeParse()`
+  - Auth routes: login, register, change-password, me, profile, refresh, logout
+  - Termine routes: GET/POST list, GET/PUT/DELETE detail (added full Zod validation, removed manual checks)
+  - Members routes: GET/POST list, GET/PUT/DELETE detail
+  - Berichte routes: GET/POST list, GET/PUT/DELETE detail
+- ✅ All validation errors return 400 with structured `{ success: false, error, details }` response
+- ✅ Removed nested JSON try/catch blocks — single catch handler processes all errors
+- ✅ All HTTP status codes correct: 201 for creation, 400/401/403/404 for errors, 500 for server errors
+- ✅ No sensitive error details leaked
+- ✅ `npm run build` passes with no errors
+
+### Phase 8 — Member Management Bug Fix
+
+- ✅ Fixed member form state reset issue — form now properly resets when opening/closing dialog or switching between members
+- ✅ Added field-specific validation error display — errors from API are now shown below each field with red border highlight
+- ✅ Added `useEffect` hook to reset form state when dialog opens/closes or `member.id` changes
+- ✅ Improved error handling to parse and display validation details from API responses
+- ✅ Form clears field errors when user starts typing (better UX)
+- ✅ `npm run build` passes with no errors
+
 ## In Progress
 
 - None

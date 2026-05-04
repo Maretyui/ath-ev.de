@@ -28,7 +28,6 @@ import {
   Pencil,
   Trash2,
   LogOut,
-  Key,
   Loader2,
 } from "lucide-react";
 
@@ -70,6 +69,7 @@ export default function MembersPage() {
   const [formOpen, setFormOpen] = useState(false);
   const [formMode, setFormMode] = useState<"add" | "edit">("add");
   const [editMember, setEditMember] = useState<Member | null>(null);
+  const [memberKey, setMemberKey] = useState(0);
 
   // Delete state
   const [deleteOpen, setDeleteOpen] = useState(false);
@@ -78,7 +78,6 @@ export default function MembersPage() {
   const canEdit = userRole === "manager" || userRole === "admin";
 
   const fetchMembers = useCallback(async () => {
-    setLoading(true);
     const params = new URLSearchParams();
     if (search) params.set("search", search);
     params.set("sort", sort);
@@ -121,12 +120,14 @@ export default function MembersPage() {
   }
 
   function handleAdd() {
+    setMemberKey((k) => k + 1);
     setEditMember(null);
     setFormMode("add");
     setFormOpen(true);
   }
 
   function handleEdit(member: Member) {
+    setMemberKey((k) => k + 1);
     setEditMember({
       ...member,
       geburtstag: member.geburtstag
@@ -177,21 +178,10 @@ export default function MembersPage() {
               Total: {total} | Jugendliche: {jugendliche}
             </p>
           </div>
-          <div className="flex items-center gap-2">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => router.push("/intern/change-password")}
-              className="hidden sm:flex"
-            >
-              <Key className="mr-2 h-4 w-4" />
-              Passwort
-            </Button>
-            <Button variant="outline" size="sm" onClick={handleLogout}>
-              <LogOut className="mr-2 h-4 w-4" />
-              <span className="hidden sm:inline">Abmelden</span>
-            </Button>
-          </div>
+          <Button variant="outline" size="sm" onClick={handleLogout}>
+            <LogOut className="mr-2 h-4 w-4" />
+            <span className="hidden sm:inline">Abmelden</span>
+          </Button>
         </div>
       </header>
 
@@ -303,6 +293,7 @@ export default function MembersPage() {
 
       {/* Add/Edit Form */}
       <MemberForm
+        key={memberKey}
         open={formOpen}
         onClose={() => setFormOpen(false)}
         onSuccess={fetchMembers}

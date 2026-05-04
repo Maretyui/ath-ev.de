@@ -5,11 +5,19 @@ import Link from "next/link";
 export const dynamic = "force-dynamic";
 
 function excerptFromContent(content: string) {
-  return content
+  const plain = content
+    .replace(/!\[.*?\]\(.*?\)/g, "")        // images
+    .replace(/\[(.+?)\]\(.+?\)/g, "$1")     // links → label only
+    .replace(/^#{1,6}\s+/gm, "")            // headings
+    .replace(/\*\*(.+?)\*\*/g, "$1")        // bold
+    .replace(/\*(.+?)\*/g, "$1")            // italic
+    .replace(/`{1,3}[^`]*`{1,3}/g, "")     // code
+    .replace(/^[-*+]\s+/gm, "")             // unordered lists
+    .replace(/^\d+\.\s+/gm, "")             // ordered lists
     .replace(/\s+/g, " ")
-    .trim()
-    .slice(0, 140)
-    .replace(/\s+$/u, "") + "...";
+    .trim();
+
+  return plain.slice(0, 140).replace(/\s+$/, "") + "...";
 }
 
 export default async function BerichtePage() {
@@ -59,7 +67,7 @@ export default async function BerichtePage() {
 
       <section className="mx-auto max-w-6xl rounded-3xl border border-border bg-background p-6 text-sm text-muted-foreground">
         <p>
-          Du möchtest regelmäßig neue Berichte erhalten? Folge uns auf unserer Website oder schreibe uns eine Nachricht, um über Veranstaltungen, Tauchreisen und Ausbildungsangebote informiert zu werden.
+          Du möchtest selbst einen Bericht veröffentlichen oder hast Fragen zu unseren Aktivitäten? Wir freuen uns immer über neue Beiträge und den Austausch mit unseren Mitgliedern. Egal ob du ein spannendes Taucherlebnis teilen möchtest oder einfach mehr über unsere Gemeinschaft erfahren willst – zögere nicht, dich bei uns zu melden!
         </p>
         <div className="mt-4 inline-flex items-center gap-3">
           <Link href="/kontakt" className="font-medium text-primary underline transition hover:text-primary/80">

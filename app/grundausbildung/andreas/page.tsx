@@ -9,7 +9,7 @@ export default function AndreasPage() {
         image="https://picsum.photos/900/1200?random=12"
         qualifications={[
           "CMAS/DTSA**",
-          "Trainer C Gerätetauchen",
+          "Trainer-C Gerätetauchen",
           "Ausbilder für Kinder und Jugendliche",
         ]}
         description={[

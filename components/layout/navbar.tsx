@@ -27,11 +27,14 @@ import {
   LogOut,
   User,
   KeyRound,
+  LayoutDashboard,
+  Users,
 } from "lucide-react";
 
 interface AuthUser {
   id: string;
   email: string;
+  username?: string | null;
   role: string;
 }
 
@@ -39,7 +42,6 @@ const NAV_LINKS = [
   { href: "/berichte", label: "Berichte" },
   { href: "/termine", label: "Termine" },
   { href: "/links", label: "Links" },
-  { href: "/intern", label: "Intern" },
 ];
 
 const VEREIN_LINKS = [
@@ -53,6 +55,14 @@ const AUSBILDUNG_LINKS = [
   { href: "/grundausbildung/andreas", label: "Grundausbildung Andreas" },
   { href: "/grundausbildung/maik", label: "Grundausbildung Maik" },
 ];
+
+function canAccessDashboard(role: string) {
+  return ["publisher", "manager", "admin"].includes(role);
+}
+
+function displayName(user: AuthUser) {
+  return user.username ?? user.email.split("@")[0];
+}
 
 export function Navbar() {
   const { theme, toggle } = useTheme();
@@ -85,7 +95,7 @@ export function Navbar() {
         <Link href="/" className="text-2xl font-bold text-primary shrink-0">
           ATH
         </Link>
-
+        {/* Desktop nav */}
         <div className="hidden md:flex items-center gap-6 text-sm font-medium">
           {NAV_LINKS.map((link) => (
             <Link
@@ -97,32 +107,26 @@ export function Navbar() {
             </Link>
           ))}
 
+
           <DropdownMenu>
             <DropdownMenuTrigger className="flex items-center gap-1 text-sm font-medium text-foreground hover:text-primary transition-colors outline-none">
               Verein <ChevronDown className="h-4 w-4" />
             </DropdownMenuTrigger>
             <DropdownMenuContent>
               {VEREIN_LINKS.map((link) => (
-                <DropdownMenuItem
-                  key={link.href}
-                  onClick={() => router.push(link.href)}
-                >
+                <DropdownMenuItem key={link.href} onClick={() => router.push(link.href)}>
                   {link.label}
                 </DropdownMenuItem>
               ))}
             </DropdownMenuContent>
           </DropdownMenu>
-
           <DropdownMenu>
             <DropdownMenuTrigger className="flex items-center gap-1 text-sm font-medium text-foreground hover:text-primary transition-colors outline-none">
               Ausbildung <ChevronDown className="h-4 w-4" />
             </DropdownMenuTrigger>
             <DropdownMenuContent>
               {AUSBILDUNG_LINKS.map((link) => (
-                <DropdownMenuItem
-                  key={link.href}
-                  onClick={() => router.push(link.href)}
-                >
+                <DropdownMenuItem key={link.href} onClick={() => router.push(link.href)}>
                   {link.label}
                 </DropdownMenuItem>
               ))}
@@ -134,40 +138,32 @@ export function Navbar() {
             aria-label="Theme wechseln"
             className="h-9 w-9 flex items-center justify-center rounded-md hover:bg-muted transition-colors"
           >
-            {theme === "dark" ? (
-              <Sun className="h-5 w-5" />
-            ) : (
-              <Moon className="h-5 w-5" />
-            )}
+            {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
           </button>
 
           {user ? (
             <DropdownMenu>
               <DropdownMenuTrigger className="flex items-center gap-2 rounded-lg border border-border px-3 py-2 text-sm font-medium text-foreground hover:bg-muted transition-colors outline-none">
                 <User className="h-4 w-4" />
-                {user.email.split("@")[0]}
+                {displayName(user)}
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                <DropdownMenuItem
-                  onClick={() => router.push("/intern/profil")}
-                  className="flex items-center gap-2"
-                >
-                  <User className="h-4 w-4" />
-                  Profil
+                {canAccessDashboard(user.role) && (
+                  <DropdownMenuItem onClick={() => router.push("/intern/dashboard")} className="flex items-center gap-2">
+                    <LayoutDashboard className="h-4 w-4" />
+                    Dashboard
+                  </DropdownMenuItem>
+                )}
+                <DropdownMenuItem onClick={() => router.push("/intern/members")} className="flex items-center gap-2">
+                  <Users className="h-4 w-4" />
+                  Mitglieder
                 </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={() => router.push("/intern/passwort")}
-                  className="flex items-center gap-2"
-                >
+                <DropdownMenuItem onClick={() => router.push("/intern/change-password")} className="flex items-center gap-2">
                   <KeyRound className="h-4 w-4" />
-                  Passwort ändern
+                  Passwort / Benutzername
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem
-                  onClick={handleLogout}
-                  variant="destructive"
-                  className="flex items-center gap-2"
-                >
+                <DropdownMenuItem onClick={handleLogout} variant="destructive" className="flex items-center gap-2">
                   <LogOut className="h-4 w-4" />
                   Abmelden
                 </DropdownMenuItem>
@@ -185,17 +181,14 @@ export function Navbar() {
           )}
         </div>
 
+        {/* Mobile */}
         <div className="flex items-center gap-3 md:hidden">
           <button
             onClick={toggle}
             aria-label="Theme wechseln"
             className="h-9 w-9 flex items-center justify-center rounded-md hover:bg-muted transition-colors"
           >
-            {theme === "dark" ? (
-              <Sun className="h-5 w-5" />
-            ) : (
-              <Moon className="h-5 w-5" />
-            )}
+            {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
           </button>
 
           <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
@@ -205,7 +198,7 @@ export function Navbar() {
             >
               <Menu className="h-5 w-5" />
             </SheetTrigger>
-            <SheetContent side="left" className="w-72 pt-6">
+            <SheetContent side="right" className="w-72 pt-6">
               <SheetHeader className="mb-4 text-left px-4">
                 <SheetTitle>Navigation</SheetTitle>
               </SheetHeader>
@@ -258,19 +251,29 @@ export function Navbar() {
                 <div className="mt-6 border-t border-border pt-4">
                   {user ? (
                     <div className="flex flex-col gap-1">
+                      <p className="px-3 py-1 text-xs text-muted-foreground">{displayName(user)}</p>
+                      {canAccessDashboard(user.role) && (
+                        <button
+                          onClick={() => navigateAndClose("/intern/dashboard")}
+                          className="py-2 px-3 rounded-md text-sm text-foreground hover:bg-muted transition-colors flex items-center gap-2 text-left"
+                        >
+                          <LayoutDashboard className="h-4 w-4" />
+                          Dashboard
+                        </button>
+                      )}
                       <button
-                        onClick={() => navigateAndClose("/intern/profil")}
+                        onClick={() => navigateAndClose("/intern/members")}
                         className="py-2 px-3 rounded-md text-sm text-foreground hover:bg-muted transition-colors flex items-center gap-2 text-left"
                       >
-                        <User className="h-4 w-4" />
-                        Profil
+                        <Users className="h-4 w-4" />
+                        Mitglieder
                       </button>
                       <button
-                        onClick={() => navigateAndClose("/intern/passwort")}
+                        onClick={() => navigateAndClose("/intern/change-password")}
                         className="py-2 px-3 rounded-md text-sm text-foreground hover:bg-muted transition-colors flex items-center gap-2 text-left"
                       >
                         <KeyRound className="h-4 w-4" />
-                        Passwort ändern
+                        Passwort / Benutzername
                       </button>
                       <button
                         onClick={handleLogout}

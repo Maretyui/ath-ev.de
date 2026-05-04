@@ -22,9 +22,10 @@ function formatDetailDate(date: Date) {
   }).format(date);
 }
 
-export default async function TerminDetailPage({ params }: { params: { id: string } }) {
+export default async function TerminDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   const termin = await prisma.termin.findUnique({
-    where: { id: params.id },
+    where: { id },
     include: { createdBy: { select: { email: true } } },
   });
 
@@ -73,7 +74,10 @@ export default async function TerminDetailPage({ params }: { params: { id: strin
 
         <div className="border-t border-border pt-6">
           {bodyHtml ? (
-            <article className="prose prose-neutral max-w-none text-foreground [&_img]:max-w-full [&_img]:h-auto" dangerouslySetInnerHTML={{ __html: bodyHtml }} />
+            <article
+              className="text-base leading-relaxed text-foreground [&_h2]:mb-2 [&_h2]:mt-8 [&_h2]:text-2xl [&_h2]:font-bold [&_h3]:mb-2 [&_h3]:mt-6 [&_h3]:text-xl [&_h3]:font-semibold [&_h4]:mb-1 [&_h4]:mt-4 [&_h4]:text-lg [&_h4]:font-medium [&_p]:mb-4 [&_p]:leading-relaxed [&_strong]:font-bold [&_em]:italic [&_ul]:mb-4 [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:mb-4 [&_ol]:list-decimal [&_ol]:pl-5 [&_li]:mb-1.5 [&_a]:text-primary [&_a]:underline [&_blockquote]:my-4 [&_blockquote]:border-l-4 [&_blockquote]:border-border [&_blockquote]:pl-4 [&_blockquote]:italic [&_blockquote]:text-muted-foreground [&_code]:rounded [&_code]:bg-muted [&_code]:px-1 [&_code]:font-mono [&_code]:text-sm [&_pre]:my-4 [&_pre]:overflow-x-auto [&_pre]:rounded-lg [&_pre]:bg-muted [&_pre]:p-4 [&_img]:my-4 [&_img]:max-w-full [&_img]:rounded-lg"
+              dangerouslySetInnerHTML={{ __html: bodyHtml }}
+            />
           ) : (
             <p className="text-base leading-8 text-muted-foreground">
               Zu diesem Termin gibt es momentan keine ausführliche Beschreibung.
