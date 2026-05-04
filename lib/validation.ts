@@ -29,3 +29,16 @@ export const terminSchema = z.object({
   description: z.string().max(5000).optional(),
   image: z.string().url("Image must be a valid URL").optional(),
 });
+
+export const memberSchema = z.object({
+  name: z.string().min(2, "Name must be at least 2 characters").max(100, "Name is too long"),
+  street: z.string().min(3, "Street is required").max(150, "Street is too long"),
+  plz: z.string().min(4, "PLZ must be at least 4 characters").max(10, "PLZ is too long"),
+  ort: z.string().min(2, "City is required").max(100, "City is too long"),
+  telefon: z.string().min(5, "Phone number is too short").max(30, "Phone number is too long"),
+  email: z.string().email("Invalid email address"),
+  geburtstag: z.string().regex(/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/, "Date must be YYYY-MM-DD").optional().or(z.literal("")),
+  jugend: z.boolean().optional(),
+});
+
+export const memberUpdateSchema = memberSchema.partial();

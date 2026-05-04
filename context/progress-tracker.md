@@ -73,13 +73,26 @@ Implement public-facing pages: landing, berichte, termine, links, grundausbildun
 - ✅ Implemented Berichte API routes for list and detail retrieval.
 - ✅ `npm run build` passes after the latest public Berichte implementation
 
+### Phase 5 — Member Management (Intern Pages)
+
+- ✅ Added member validation schema to `lib/validation.ts` (name, street, PLZ, city, phone, email, birthday, youth status)
+- ✅ Created `app/api/members/route.ts` — GET (list with filters), POST (create member with ABAC)
+- ✅ Created `app/api/members/[id]/route.ts` — GET, PUT (update), DELETE with ownership checks
+- ✅ Created `app/intern/login/page.tsx` — login form with email/password validation
+- ✅ Created `app/intern/members/page.tsx` — members table with sorting, filtering, add/edit/delete operations
+- ✅ Created `app/intern/change-password/page.tsx` — change password form with validation
+- ✅ Created `components/members/member-form.tsx` — reusable form for adding/editing members
+- ✅ Created `components/members/delete-dialog.tsx` — confirmation dialog for member deletion
+- ✅ Created `app/intern/page.tsx` — landing page with quick links to login
+- ✅ `npm run build` passes with no errors
+
 ## In Progress
 
 - None
 
 ## Next Up
 
-**Phase 4: Public Pages & Layout**
+**Phase 4: Public Pages & Layout** (continued)
 1. ✅ Create `app/(public)/berichte/page.tsx` + `[id]/page.tsx`
 2. ✅ Create `app/(public)/termine/page.tsx` + `[id]/page.tsx`
 3. ✅ Create `app/grundausbildung/andreas/page.tsx` + `app/grundausbildung/maik/page.tsx`
