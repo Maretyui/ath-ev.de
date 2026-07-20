@@ -108,7 +108,7 @@ export default function ContactPage() {
                   onChange={handleChange}
                   required
                   rows={7}
-                  placeholder="Write your message here..."
+                  placeholder="Deine Nachricht..."
                   className="w-full bg-transparent border border-white/10 px-4 py-3 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-white/40 transition resize-none"
                 />
               </div>
