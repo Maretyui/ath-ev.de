@@ -1,7 +1,8 @@
 {
-  "name": "ath-ev.de.v3",
+  "name": "@maretyui/ath-ev-de",
   "version": "0.1.0",
   "private": true,
+  "author": "Maik Reinhardt",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
