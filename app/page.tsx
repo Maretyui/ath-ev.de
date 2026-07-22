@@ -71,7 +71,15 @@ export default function Home() {
 
       <section className="bg-surface py-16">
         <div className="mx-auto max-w-[1200px] px-6 sm:px-8 lg:px-10">
-          <div className="grid gap-6 lg:grid-cols-3">
+          <div className="max-w-2xl">
+            <p className="text-sm uppercase tracking-[0.35em] text-muted-foreground">
+              Das erwartet Dich
+            </p>
+            <h2 className="mt-4 text-3xl font-bold text-foreground sm:text-4xl">
+              Unsere Angebote im Überblick
+            </h2>
+          </div>
+          <div className="mt-10 grid gap-6 lg:grid-cols-3">
             <article className="rounded-3xl border border-border bg-card p-6 shadow-sm">
               <p className="text-sm font-medium uppercase tracking-[0.25em] text-muted-foreground">
                 Grundausbildung
