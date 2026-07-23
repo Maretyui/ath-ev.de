@@ -29,7 +29,7 @@ export default function Home() {
         <div className="relative mx-auto flex w-full max-w-[1200px] flex-col gap-8 px-6 py-16 sm:px-8 lg:px-10">
           <div className="max-w-3xl text-white">
             <p className="mb-4 text-sm uppercase tracking-[0.4em] text-white/70">
-              Aquanautik Taucher Hamburg e.V.
+              Aquanautic Taucher Hamburg e.V.
             </p>
             <h1 className="text-4xl font-bold leading-tight sm:text-5xl">
               Willkommen beim ATH
