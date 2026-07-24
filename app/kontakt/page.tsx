@@ -42,7 +42,7 @@ export default function ContactPage() {
             <div className="text-center py-16 border border-white/10">
               <p className="text-xs uppercase tracking-widest text-gray-500 mb-4">Nachricht gesendet</p>
               <p className="text-2xl font-bold tracking-tight mb-6">Danke!</p>
-              <p className="text-gray-400 mb-10">Ich melde mich schnellstmöglich bei dir zurück.</p>
+              <p className="text-gray-400 mb-10">Wir melden uns schnellstmöglich bei dir zurück.</p>
               <button
                 onClick={() => setStatus('idle')}
                 className="text-xs uppercase tracking-widest text-gray-400 border-b border-gray-600 pb-0.5 hover:text-white hover:border-white transition"
