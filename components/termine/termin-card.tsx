@@ -21,7 +21,12 @@ export function TerminCard({ id, title, date, time, location, image, isPast }: T
       )}
     >
       {image ? (
-        <div className="h-56 bg-cover bg-center" style={{ backgroundImage: `url(${image})` }} />
+        <div
+          className="h-56 bg-cover bg-center"
+          style={{ backgroundImage: `url(${image})` }}
+          role="img"
+          aria-label={title}
+        />
       ) : (
         <div className="flex h-56 items-center justify-center bg-muted text-sm text-muted-foreground">
           Kein Bild vorhanden
