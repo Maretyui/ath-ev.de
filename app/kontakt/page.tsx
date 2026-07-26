@@ -34,7 +34,7 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="min-h-70vh">
+    <div className="min-h-[70vh]">
 
       <section className="px-8 py-20">
         <div className="max-w-xl mx-auto">
