@@ -15,6 +15,8 @@ export function BerichtCard({ id, title, excerpt, publishedAt, image }: BerichtC
       <div
         className="h-48 bg-cover bg-center"
         style={{ backgroundImage: `linear-gradient(to bottom, rgba(15, 23, 42, 0.12), rgba(15, 23, 42, 0.5)), url(${image})` }}
+        role="img"
+        aria-label={title}
       />
       <CardContent>
         <CardHeader className="gap-2">
