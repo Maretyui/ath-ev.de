@@ -56,7 +56,7 @@ export function TrainerProfile({
 
           <section className="space-y-6 rounded-[1.5rem] border border-border bg-card p-8 shadow-sm">
             <h2 className="text-2xl font-semibold text-foreground">Über {name.split(" ")[0]}</h2>
-            <div className="space-y-5 text-base leading-8 text-primary">
+            <div className="space-y-5 text-base leading-8 text-foreground">
               {description.map((paragraph, index) => (
                 <p key={index}>{paragraph}</p>
               ))}
