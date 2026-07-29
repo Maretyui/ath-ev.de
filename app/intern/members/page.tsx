@@ -261,7 +261,11 @@ export default function MembersPage() {
                       <TableCell>
                         <DropdownMenu>
                           <DropdownMenuTrigger>
-                            <Button variant="ghost" size="icon">
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              aria-label={`Aktionen für ${member.name}`}
+                            >
                               <MoreHorizontal className="h-4 w-4" />
                             </Button>
                           </DropdownMenuTrigger>
@@ -277,7 +281,7 @@ export default function MembersPage() {
                               className="text-destructive focus:text-destructive"
                             >
                               <Trash2 className="mr-2 h-4 w-4" />
-                              Loeschen
+                              Löschen
                             </DropdownMenuItem>
                           </DropdownMenuContent>
                         </DropdownMenu>
