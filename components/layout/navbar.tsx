@@ -136,7 +136,7 @@ export function Navbar() {
           <button
             onClick={toggle}
             aria-label="Theme wechseln"
-            className="h-9 w-9 flex items-center justify-center rounded-md hover:bg-muted transition-colors"
+            className="h-9 w-9 flex items-center justify-center rounded-md hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring transition-colors"
           >
             {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
           </button>
@@ -186,14 +186,14 @@ export function Navbar() {
           <button
             onClick={toggle}
             aria-label="Theme wechseln"
-            className="h-9 w-9 flex items-center justify-center rounded-md hover:bg-muted transition-colors"
+            className="h-9 w-9 flex items-center justify-center rounded-md hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring transition-colors"
           >
             {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
           </button>
 
           <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
             <SheetTrigger
-              className="h-9 w-9 flex items-center justify-center rounded-md hover:bg-muted transition-colors"
+              className="h-9 w-9 flex items-center justify-center rounded-md hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring transition-colors"
               aria-label="Menü öffnen"
             >
               <Menu className="h-5 w-5" />
