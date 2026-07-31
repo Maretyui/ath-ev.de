@@ -54,10 +54,11 @@ export default function ContactPage() {
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-xs uppercase tracking-widest text-gray-500 mb-2">
+                  <label htmlFor="name" className="block text-xs uppercase tracking-widest text-gray-500 mb-2">
                     Name
                   </label>
                   <input
+                    id="name"
                     type="text"
                     name="name"
                     value={form.name}
@@ -68,10 +69,11 @@ export default function ContactPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-xs uppercase tracking-widest text-gray-500 mb-2">
+                  <label htmlFor="email" className="block text-xs uppercase tracking-widest text-gray-500 mb-2">
                     Email
                   </label>
                   <input
+                    id="email"
                     type="email"
                     name="email"
                     value={form.email}
@@ -84,10 +86,11 @@ export default function ContactPage() {
               </div>
 
               <div>
-                <label className="block text-xs uppercase tracking-widest text-gray-500 mb-2">
+                <label htmlFor="subject" className="block text-xs uppercase tracking-widest text-gray-500 mb-2">
                   Thema
                 </label>
                 <input
+                  id="subject"
                   type="text"
                   name="subject"
                   value={form.subject}
@@ -99,10 +102,11 @@ export default function ContactPage() {
               </div>
 
               <div>
-                <label className="block text-xs uppercase tracking-widest text-gray-500 mb-2">
+                <label htmlFor="message" className="block text-xs uppercase tracking-widest text-gray-500 mb-2">
                   Nachricht
                 </label>
                 <textarea
+                  id="message"
                   name="message"
                   value={form.message}
                   onChange={handleChange}
