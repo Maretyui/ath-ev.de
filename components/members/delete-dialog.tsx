@@ -42,7 +42,7 @@ export function DeleteDialog({
       const data = await res.json();
 
       if (!res.ok || !data.success) {
-        setError(data.error || "Loeschen fehlgeschlagen");
+        setError(data.error || "Löschen fehlgeschlagen");
         setLoading(false);
         return;
       }
@@ -63,11 +63,11 @@ export function DeleteDialog({
             <AlertTriangle className="h-6 w-6 text-destructive" />
           </div>
           <DialogTitle className="text-center">
-            Mitglied loeschen?
+            Mitglied löschen?
           </DialogTitle>
           <DialogDescription className="text-center">
-            Moechtest du <strong>{memberName}</strong> wirklich loeschen? Diese
-            Aktion kann nicht rueckgaengig gemacht werden.
+            Möchtest du <strong>{memberName}</strong> wirklich löschen? Diese
+            Aktion kann nicht rückgängig gemacht werden.
           </DialogDescription>
         </DialogHeader>
 
@@ -87,7 +87,7 @@ export function DeleteDialog({
             onClick={handleDelete}
             disabled={loading}
           >
-            {loading ? "Loeschen..." : "Loeschen"}
+            {loading ? "Löschen..." : "Löschen"}
           </Button>
         </DialogFooter>
       </DialogContent>
