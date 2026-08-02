@@ -71,7 +71,7 @@ export default function ChangePasswordPage() {
       return;
     }
     if (!/[A-Z]/.test(newPassword)) {
-      setError("Das neue Passwort muss mindestens einen Grossbuchstaben enthalten");
+      setError("Das neue Passwort muss mindestens einen Großbuchstaben enthalten");
       return;
     }
     if (!/[0-9]/.test(newPassword)) {
@@ -79,7 +79,7 @@ export default function ChangePasswordPage() {
       return;
     }
     if (newPassword !== confirmPassword) {
-      setError("Die neuen Passwoerter stimmen nicht ueberein");
+      setError("Die neuen Passwörter stimmen nicht überein");
       return;
     }
 
@@ -98,7 +98,7 @@ export default function ChangePasswordPage() {
           router.push("/intern/login");
           return;
         }
-        setError(data.error || "Passwort aendern fehlgeschlagen");
+        setError(data.error || "Passwort ändern fehlgeschlagen");
         setLoading(false);
         return;
       }
@@ -167,7 +167,7 @@ export default function ChangePasswordPage() {
           <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
             <Key className="h-6 w-6 text-primary" />
           </div>
-          <CardTitle className="text-2xl font-bold">Passwort aendern</CardTitle>
+          <CardTitle className="text-2xl font-bold">Passwort ändern</CardTitle>
           <p className="text-muted-foreground text-sm mt-2">
             Gib dein aktuelles und ein neues Passwort ein
           </p>
@@ -183,7 +183,7 @@ export default function ChangePasswordPage() {
             {success && (
               <div className="flex items-center gap-2 rounded-md bg-green-500/10 p-3 text-sm text-green-600 dark:text-green-400">
                 <CheckCircle2 className="h-4 w-4 shrink-0" />
-                <span>Passwort erfolgreich geaendert!</span>
+                <span>Passwort erfolgreich geändert!</span>
               </div>
             )}
             <div className="space-y-2">
@@ -208,11 +208,11 @@ export default function ChangePasswordPage() {
                 autoComplete="new-password"
               />
               <p className="text-xs text-muted-foreground">
-                Mindestens 8 Zeichen, 1 Grossbuchstabe, 1 Zahl
+                Mindestens 8 Zeichen, 1 Großbuchstabe, 1 Zahl
               </p>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="confirmPassword">Neues Passwort bestaetigen</Label>
+              <Label htmlFor="confirmPassword">Neues Passwort bestätigen</Label>
               <Input
                 id="confirmPassword"
                 type="password"
@@ -223,7 +223,7 @@ export default function ChangePasswordPage() {
               />
             </div>
             <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? "Wird geaendert..." : "Passwort aendern"}
+              {loading ? "Wird geändert..." : "Passwort ändern"}
             </Button>
           </form>
 
@@ -233,7 +233,7 @@ export default function ChangePasswordPage() {
               className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
             >
               <ArrowLeft className="h-4 w-4" />
-              Zurueck zur Mitgliederliste
+              Zurück zur Mitgliederliste
             </Link>
           </div>
         </CardContent>
