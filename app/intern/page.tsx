@@ -45,7 +45,7 @@ export default function InternPage() {
           </div>
           <CardTitle className="text-2xl font-bold">Interner Bereich</CardTitle>
           <p className="text-muted-foreground text-sm mt-2">
-            Dieser Bereich ist nur fuer Mitglieder zugaenglich. Bitte melde dich
+            Dieser Bereich ist nur für Mitglieder zugänglich. Bitte melde dich
             an, um fortzufahren.
           </p>
         </CardHeader>
