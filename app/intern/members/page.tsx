@@ -200,7 +200,7 @@ export default function MembersPage() {
           {canEdit && (
             <Button onClick={handleAdd}>
               <Plus className="mr-2 h-4 w-4" />
-              Mitglied hinzufuegen
+              Mitglied hinzufügen
             </Button>
           )}
         </div>
