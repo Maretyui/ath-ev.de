@@ -332,6 +332,7 @@ export default function DashboardPage() {
                             <Button
                               variant="ghost"
                               size="icon"
+                              aria-label={`Bericht "${b.title}" bearbeiten`}
                               onClick={() => openBerichtForm("edit", b)}
                             >
                               <Pencil className="h-4 w-4" />
@@ -340,6 +341,7 @@ export default function DashboardPage() {
                               variant="ghost"
                               size="icon"
                               className="text-destructive hover:text-destructive"
+                              aria-label={`Bericht "${b.title}" löschen`}
                               onClick={() => setDeleteBerichtId(b)}
                             >
                               <Trash2 className="h-4 w-4" />
@@ -411,6 +413,7 @@ export default function DashboardPage() {
                             <Button
                               variant="ghost"
                               size="icon"
+                              aria-label={`Termin "${t.title}" bearbeiten`}
                               onClick={() =>
                                 openTerminForm("edit", { ...t, date: formatISODate(t.date) })
                               }
@@ -421,6 +424,7 @@ export default function DashboardPage() {
                               variant="ghost"
                               size="icon"
                               className="text-destructive hover:text-destructive"
+                              aria-label={`Termin "${t.title}" löschen`}
                               onClick={() => setDeleteTerminId(t)}
                             >
                               <Trash2 className="h-4 w-4" />
