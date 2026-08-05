@@ -16,7 +16,10 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Aquanautic Taucher Hamburg e.V.",
+  title: {
+    default: "Aquanautic Taucher Hamburg e.V.",
+    template: "%s | Aquanautic Taucher Hamburg e.V.",
+  },
   description:
     "Der Tauchsportverein in Hamburg – Tauchen lernen, Gemeinschaft erleben.",
 };

@@ -1,7 +1,14 @@
+import type { Metadata } from "next";
 import { prisma } from "@/lib/prisma";
 import { TerminCard } from "@/components/termine/termin-card";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "Termine",
+  description:
+    "Anstehende Termine und Veranstaltungen von Aquanautic Taucher Hamburg e.V.",
+};
 
 function formatListDate(date: Date) {
   return new Intl.DateTimeFormat("de-DE", {

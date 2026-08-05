@@ -1,8 +1,15 @@
+import type { Metadata } from "next";
 import { prisma } from "@/lib/prisma";
 import { BerichtCard } from "@/components/berichte/bericht-card";
 import Link from "next/link";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "Berichte",
+  description:
+    "Aktuelle Berichte, Trainingseindrücke und Veranstaltungen aus dem Vereinsleben von Aquanautic Taucher Hamburg e.V.",
+};
 
 function excerptFromContent(content: string) {
   const plain = content
