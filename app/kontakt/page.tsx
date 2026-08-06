@@ -70,7 +70,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <label htmlFor="email" className="block text-xs uppercase tracking-widest text-gray-500 mb-2">
-                    Email
+                    E-Mail
                   </label>
                   <input
                     id="email"
