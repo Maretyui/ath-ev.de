@@ -38,6 +38,10 @@ export default function ContactPage() {
 
       <section className="px-8 py-20">
         <div className="max-w-xl mx-auto">
+          <div className="text-center mb-12">
+            <p className="text-xs uppercase tracking-widest text-gray-500 mb-4">Kontakt</p>
+            <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">Schreib uns eine Nachricht</h1>
+          </div>
           {status === 'success' ? (
             <div className="text-center py-16 border border-white/10">
               <p className="text-xs uppercase tracking-widest text-gray-500 mb-4">Nachricht gesendet</p>
