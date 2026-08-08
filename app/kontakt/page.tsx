@@ -122,7 +122,7 @@ export default function ContactPage() {
               </div>
 
               {status === 'error' && (
-                <p className="text-xs uppercase tracking-widest text-red-500">
+                <p role="alert" className="text-xs uppercase tracking-widest text-red-500">
                   Etwas ist schief gelaufen. Bitte versuche es später erneut.
                 </p>
               )}
