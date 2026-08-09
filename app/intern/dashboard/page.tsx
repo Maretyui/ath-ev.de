@@ -98,9 +98,9 @@ function DeleteConfirm({ open, title, onClose, onConfirm }: DeleteConfirmProps) 
           <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-destructive/10">
             <AlertTriangle className="h-6 w-6 text-destructive" />
           </div>
-          <DialogTitle className="text-center">Wirklich loeschen?</DialogTitle>
+          <DialogTitle className="text-center">Wirklich löschen?</DialogTitle>
           <DialogDescription className="text-center">
-            <strong>{title}</strong> wird unwiderruflich geloescht.
+            <strong>{title}</strong> wird unwiderruflich gelöscht.
           </DialogDescription>
         </DialogHeader>
         {error && (
@@ -113,7 +113,7 @@ function DeleteConfirm({ open, title, onClose, onConfirm }: DeleteConfirmProps) 
             Abbrechen
           </Button>
           <Button variant="destructive" onClick={handleConfirm} disabled={loading}>
-            {loading ? "Loeschen..." : "Loeschen"}
+            {loading ? "Löschen..." : "Löschen"}
           </Button>
         </DialogFooter>
       </DialogContent>
@@ -222,14 +222,14 @@ export default function DashboardPage() {
   async function deleteBericht(id: string) {
     const res = await fetch(`/api/berichte/${id}`, { method: "DELETE" });
     const data = await res.json();
-    if (!res.ok || !data.success) throw new Error(data.error || "Loeschen fehlgeschlagen");
+    if (!res.ok || !data.success) throw new Error(data.error || "Löschen fehlgeschlagen");
     await fetchBerichte();
   }
 
   async function deleteTermin(id: string) {
     const res = await fetch(`/api/termine/${id}`, { method: "DELETE" });
     const data = await res.json();
-    if (!res.ok || !data.success) throw new Error(data.error || "Loeschen fehlgeschlagen");
+    if (!res.ok || !data.success) throw new Error(data.error || "Löschen fehlgeschlagen");
     await fetchTermine();
   }
 
