@@ -16,6 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://ath-ev.de"),
   title: {
     default: "Aquanautic Taucher Hamburg e.V.",
     template: "%s | Aquanautic Taucher Hamburg e.V.",
