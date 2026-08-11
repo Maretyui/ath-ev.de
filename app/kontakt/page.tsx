@@ -43,7 +43,7 @@ export default function ContactPage() {
             <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">Schreib uns eine Nachricht</h1>
           </div>
           {status === 'success' ? (
-            <div className="text-center py-16 border border-white/10">
+            <div role="status" aria-live="polite" className="text-center py-16 border border-white/10">
               <p className="text-xs uppercase tracking-widest text-gray-500 mb-4">Nachricht gesendet</p>
               <p className="text-2xl font-bold tracking-tight mb-6">Danke!</p>
               <p className="text-gray-400 mb-10">Wir melden uns schnellstmöglich bei dir zurück.</p>
