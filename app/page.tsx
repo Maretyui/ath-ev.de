@@ -1,8 +1,7 @@
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
 
-const heroImage =
-  "/image.png";
+const heroImage = "/image.png";
 
 const welcomeText = `Die Aquanautic Taucher Hamburg sind einer der ältesten Tauchvereine Hamburgs. Seit mehr als 40 Jahren pflegen wir unsere Tradition als Familienverein. Wollt ihr euch sportlich engagieren, ohne die Familie zu vernachlässigen? Oder sucht euer Nachwuchs nach einer neuen Herausforderung? Unser Training und Ausfahrten berücksichtigen die Interessen von Eltern und Kindern – unabhängig, ob alle tauchen oder nur einer.
 
