@@ -61,7 +61,7 @@ export default function Home() {
             <h2 className="text-3xl font-bold text-primary sm:text-4xl">
               Über uns
             </h2>
-            <p className="mt-6 text-base leading-8 text-foreground sm:text-lg">
+            <p className="mt-6 whitespace-pre-line text-base leading-8 text-foreground sm:text-lg">
               {welcomeText}
             </p>
           </div>
