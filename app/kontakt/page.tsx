@@ -65,6 +65,7 @@ export default function ContactPage() {
                     id="name"
                     type="text"
                     name="name"
+                    autoComplete="name"
                     value={form.name}
                     onChange={handleChange}
                     required
@@ -80,6 +81,7 @@ export default function ContactPage() {
                     id="email"
                     type="email"
                     name="email"
+                    autoComplete="email"
                     value={form.email}
                     onChange={handleChange}
                     required
