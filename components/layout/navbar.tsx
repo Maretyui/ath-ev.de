@@ -194,7 +194,8 @@ export function Navbar() {
           <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
             <SheetTrigger
               className="h-9 w-9 flex items-center justify-center rounded-md hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring transition-colors"
-              aria-label="Menü öffnen"
+              aria-label={mobileOpen ? "Menü schließen" : "Menü öffnen"}
+              aria-expanded={mobileOpen}
             >
               <Menu className="h-5 w-5" aria-hidden="true" />
             </SheetTrigger>
