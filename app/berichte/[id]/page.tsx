@@ -43,7 +43,7 @@ export default async function BerichtDetailPage({ params }: { params: Promise<{ 
           </h1>
           <div className="flex flex-col gap-2 text-sm text-muted-foreground sm:flex-row sm:items-center sm:gap-4">
             <span>Veröffentlicht am {formatPublishedAt(bericht.publishedAt)}</span>
-            <span>-</span>
+            <span aria-hidden="true">-</span>
             <span>Autor: {bericht.publisher.username ?? bericht.publisher.email}</span>
           </div>
         </div>
