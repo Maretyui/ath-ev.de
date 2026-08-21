@@ -28,6 +28,7 @@ export function BerichtCard({ id, title, excerpt, publishedAt, image }: BerichtC
       <CardAction className="px-4 pb-4 pt-2">
         <Link
           href={`/berichte/${id}`}
+          aria-label={`Mehr lesen: ${title}`}
           className="rounded-full bg-primary px-4 py-2 text-sm font-semibold text-white transition hover:bg-primary/90"
         >
           Mehr lesen
