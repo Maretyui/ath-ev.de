@@ -41,7 +41,7 @@ export const canEditResource = (userId: string, resourceOwnerId: string, role: R
 
 ## Middleware
 
-Create `middleware.ts` at project root to verify JWT on all protected routes:
+Create `proxy.ts` at project root to verify JWT on all protected routes:
 
 ```typescript
 // Checks for valid JWT in cookies
@@ -76,7 +76,7 @@ export async function POST(request: Request) {
 ## Check When Done
 
 - ✅ `lib/abac.ts` defines all permission checks
-- ✅ `middleware.ts` verifies JWT on protected routes
+- ✅ `proxy.ts` verifies JWT on protected routes
 - ✅ Public routes are accessible without JWT
 - ✅ API routes enforce role checks before mutations
 - ✅ Unauthenticated requests to protected routes receive 401
