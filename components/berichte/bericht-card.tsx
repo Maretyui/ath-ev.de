@@ -29,7 +29,7 @@ export function BerichtCard({ id, title, excerpt, publishedAt, image }: BerichtC
         <Link
           href={`/berichte/${id}`}
           aria-label={`Mehr lesen: ${title}`}
-          className="rounded-full bg-primary px-4 py-2 text-sm font-semibold text-white transition hover:bg-primary/90"
+          className="rounded-full bg-primary px-4 py-2 text-sm font-semibold text-white transition hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70"
         >
           Mehr lesen
         </Link>
