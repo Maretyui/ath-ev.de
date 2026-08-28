@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
 type TerminCardProps = {
@@ -39,11 +40,7 @@ export function TerminCard({ id, title, date, time, location, image, isPast }: T
         </div>
         <h3 className="min-h-[3rem] text-lg font-semibold leading-snug text-foreground">{title}</h3>
         <p className="text-sm text-muted-foreground">{location}</p>
-        {isPast && (
-          <span className="inline-flex rounded-full bg-red-100 px-3 py-1 text-xs font-semibold text-red-700">
-            Vergangen
-          </span>
-        )}
+        {isPast && <Badge variant="destructive">Vergangen</Badge>}
       </div>
     </Link>
   );
