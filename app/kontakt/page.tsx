@@ -132,6 +132,7 @@ export default function ContactPage() {
               <button
                 type="submit"
                 disabled={status === 'sending'}
+                aria-busy={status === 'sending'}
                 className="w-full py-4 bg-white text-black text-xs uppercase tracking-widest font-semibold hover:bg-gray-100 transition disabled:opacity-40"
               >
                 {status === 'sending' ? 'Wird gesendet...' : 'Abschicken'}
