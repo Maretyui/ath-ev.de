@@ -24,7 +24,8 @@ function excerptFromContent(content: string) {
     .replace(/\s+/g, " ")
     .trim();
 
-  return plain.slice(0, 140).replace(/\s+$/, "") + "...";
+  const truncated = plain.slice(0, 140).replace(/\s+$/, "");
+  return plain.length > 140 ? `${truncated}...` : truncated;
 }
 
 export default async function BerichtePage() {
