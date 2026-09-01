@@ -175,7 +175,7 @@ export function Navbar() {
               onClick={() => router.push("/intern")}
               className="inline-flex h-9 items-center gap-2 rounded-lg border border-border bg-background px-3 text-sm font-medium text-foreground hover:bg-muted transition-colors"
             >
-              <LogIn className="h-4 w-4" />
+              <LogIn className="h-4 w-4" aria-hidden="true" />
               Anmelden
             </button>
           )}
