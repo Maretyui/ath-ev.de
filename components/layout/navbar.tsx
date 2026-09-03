@@ -135,7 +135,7 @@ export function Navbar() {
 
           <button
             onClick={toggle}
-            aria-label="Theme wechseln"
+            aria-label={theme === "dark" ? "Zu hellem Modus wechseln" : "Zu dunklem Modus wechseln"}
             className="h-9 w-9 flex items-center justify-center rounded-md hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring transition-colors"
           >
             {theme === "dark" ? <Sun className="h-5 w-5" aria-hidden="true" /> : <Moon className="h-5 w-5" aria-hidden="true" />}
@@ -185,7 +185,7 @@ export function Navbar() {
         <div className="flex items-center gap-3 md:hidden">
           <button
             onClick={toggle}
-            aria-label="Theme wechseln"
+            aria-label={theme === "dark" ? "Zu hellem Modus wechseln" : "Zu dunklem Modus wechseln"}
             className="h-9 w-9 flex items-center justify-center rounded-md hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring transition-colors"
           >
             {theme === "dark" ? <Sun className="h-5 w-5" aria-hidden="true" /> : <Moon className="h-5 w-5" aria-hidden="true" />}
