@@ -23,7 +23,7 @@ export async function Footer() {
       <div className="max-w-300 mx-auto px-8 py-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-sm text-muted-foreground">
           {/* Legal links */}
-          <div className="flex flex-col gap-2">
+          <nav aria-label="Rechtliches" className="flex flex-col gap-2">
             <p className="font-semibold text-foreground mb-1">Rechtliches</p>
             <Link
               href="/impressum"
@@ -43,7 +43,7 @@ export async function Footer() {
             >
               Kontakt
             </Link>
-          </div>
+          </nav>
 
           {/* Upcoming events */}
           <div className="flex flex-col gap-2">
