@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { useTheme } from "@/hooks/useTheme";
 import {
   DropdownMenu,
@@ -67,6 +67,7 @@ function displayName(user: AuthUser) {
 export function Navbar() {
   const { theme, toggle } = useTheme();
   const router = useRouter();
+  const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [user, setUser] = useState<AuthUser | null>(null);
 
@@ -101,7 +102,12 @@ export function Navbar() {
             <Link
               key={link.href}
               href={link.href}
-              className="text-foreground hover:text-primary transition-colors"
+              aria-current={pathname === link.href ? "page" : undefined}
+              className={
+                pathname === link.href
+                  ? "text-primary transition-colors"
+                  : "text-foreground hover:text-primary transition-colors"
+              }
             >
               {link.label}
             </Link>
