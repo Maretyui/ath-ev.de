@@ -111,6 +111,7 @@ export function BerichtForm({ open, onClose, onSuccess, bericht, mode }: Bericht
                 <button
                   type="button"
                   onClick={() => setContentMode("edit")}
+                  aria-pressed={contentMode === "edit"}
                   className={`px-3 py-1 transition-colors ${
                     contentMode === "edit"
                       ? "bg-primary text-primary-foreground"
@@ -122,6 +123,7 @@ export function BerichtForm({ open, onClose, onSuccess, bericht, mode }: Bericht
                 <button
                   type="button"
                   onClick={() => setContentMode("preview")}
+                  aria-pressed={contentMode === "preview"}
                   className={`px-3 py-1 transition-colors ${
                     contentMode === "preview"
                       ? "bg-primary text-primary-foreground"

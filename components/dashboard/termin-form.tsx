@@ -158,6 +158,7 @@ export function TerminForm({ open, onClose, onSuccess, termin, mode }: TerminFor
                 <button
                   type="button"
                   onClick={() => setDescMode("edit")}
+                  aria-pressed={descMode === "edit"}
                   className={`px-3 py-1 transition-colors ${
                     descMode === "edit"
                       ? "bg-primary text-primary-foreground"
@@ -169,6 +170,7 @@ export function TerminForm({ open, onClose, onSuccess, termin, mode }: TerminFor
                 <button
                   type="button"
                   onClick={() => setDescMode("preview")}
+                  aria-pressed={descMode === "preview"}
                   className={`px-3 py-1 transition-colors ${
                     descMode === "preview"
                       ? "bg-primary text-primary-foreground"
