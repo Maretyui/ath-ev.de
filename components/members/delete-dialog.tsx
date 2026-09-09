@@ -72,7 +72,7 @@ export function DeleteDialog({
         </DialogHeader>
 
         {error && (
-          <div className="rounded-md bg-destructive/10 p-3 text-sm text-destructive text-center">
+          <div role="alert" className="rounded-md bg-destructive/10 p-3 text-sm text-destructive text-center">
             {error}
           </div>
         )}
@@ -86,6 +86,7 @@ export function DeleteDialog({
             variant="destructive"
             onClick={handleDelete}
             disabled={loading}
+            aria-busy={loading}
           >
             {loading ? "Löschen..." : "Löschen"}
           </Button>
