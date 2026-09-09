@@ -22,6 +22,8 @@ export function TrainerProfile({
             <img
               src={image}
               alt={name}
+              loading="lazy"
+              decoding="async"
               className="h-full min-h-[420px] w-full object-cover"
             />
           </div>
