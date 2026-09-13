@@ -21,7 +21,9 @@ export function BerichtCard({ id, title, excerpt, publishedAt, image }: BerichtC
       <CardContent>
         <CardHeader className="gap-2">
           <CardTitle className="text-lg font-semibold text-foreground">{title}</CardTitle>
-          <div className="text-xs uppercase tracking-[0.24em] text-muted-foreground">{new Date(publishedAt).toLocaleDateString("de-DE", { day: "2-digit", month: "long", year: "numeric" })}</div>
+          <time dateTime={publishedAt} className="text-xs uppercase tracking-[0.24em] text-muted-foreground">
+            {new Date(publishedAt).toLocaleDateString("de-DE", { day: "2-digit", month: "long", year: "numeric" })}
+          </time>
         </CardHeader>
         <CardDescription className="mt-2 text-sm leading-6 text-muted-foreground">{excerpt}</CardDescription>
       </CardContent>
