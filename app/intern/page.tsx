@@ -30,8 +30,12 @@ export default function InternPage() {
 
   if (checking) {
     return (
-      <main className="min-h-screen flex items-center justify-center bg-background">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      <main
+        className="min-h-screen flex items-center justify-center bg-background"
+        role="status"
+      >
+        <Loader2 className="h-8 w-8 animate-spin text-primary" aria-hidden="true" />
+        <span className="sr-only">Anmeldestatus wird geprüft...</span>
       </main>
     );
   }
@@ -41,7 +45,7 @@ export default function InternPage() {
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
-            <Users className="h-8 w-8 text-primary" />
+            <Users className="h-8 w-8 text-primary" aria-hidden="true" />
           </div>
           <CardTitle className="text-2xl font-bold">Interner Bereich</CardTitle>
           <p className="text-muted-foreground text-sm mt-2">
@@ -52,7 +56,7 @@ export default function InternPage() {
         <CardContent>
           <Link href="/intern/login">
             <Button className="w-full">
-              <LogIn className="mr-2 h-4 w-4" />
+              <LogIn className="mr-2 h-4 w-4" aria-hidden="true" />
               Jetzt anmelden
             </Button>
           </Link>
