@@ -120,7 +120,7 @@ export default function ChangePasswordPage() {
       <Card className="w-full max-w-100">
         <CardHeader className="text-center">
           <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
-            <User className="h-6 w-6 text-primary" />
+            <User className="h-6 w-6 text-primary" aria-hidden="true" />
           </div>
           <CardTitle className="text-2xl font-bold">Benutzername</CardTitle>
           <p className="text-muted-foreground text-sm mt-2">
@@ -131,13 +131,13 @@ export default function ChangePasswordPage() {
           <form onSubmit={handleUsernameSubmit} className="space-y-4">
             {usernameError && (
               <div className="flex items-center gap-2 rounded-md bg-destructive/10 p-3 text-sm text-destructive">
-                <AlertCircle className="h-4 w-4 shrink-0" />
+                <AlertCircle className="h-4 w-4 shrink-0" aria-hidden="true" />
                 <span>{usernameError}</span>
               </div>
             )}
             {usernameSuccess && (
               <div className="flex items-center gap-2 rounded-md bg-green-500/10 p-3 text-sm text-green-600 dark:text-green-400">
-                <CheckCircle2 className="h-4 w-4 shrink-0" />
+                <CheckCircle2 className="h-4 w-4 shrink-0" aria-hidden="true" />
                 <span>Benutzername gespeichert!</span>
               </div>
             )}
@@ -165,7 +165,7 @@ export default function ChangePasswordPage() {
       <Card className="w-full max-w-100">
         <CardHeader className="text-center">
           <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
-            <Key className="h-6 w-6 text-primary" />
+            <Key className="h-6 w-6 text-primary" aria-hidden="true" />
           </div>
           <CardTitle className="text-2xl font-bold">Passwort ändern</CardTitle>
           <p className="text-muted-foreground text-sm mt-2">
@@ -176,13 +176,13 @@ export default function ChangePasswordPage() {
           <form onSubmit={handlePasswordSubmit} className="space-y-4">
             {error && (
               <div className="flex items-center gap-2 rounded-md bg-destructive/10 p-3 text-sm text-destructive">
-                <AlertCircle className="h-4 w-4 shrink-0" />
+                <AlertCircle className="h-4 w-4 shrink-0" aria-hidden="true" />
                 <span>{error}</span>
               </div>
             )}
             {success && (
               <div className="flex items-center gap-2 rounded-md bg-green-500/10 p-3 text-sm text-green-600 dark:text-green-400">
-                <CheckCircle2 className="h-4 w-4 shrink-0" />
+                <CheckCircle2 className="h-4 w-4 shrink-0" aria-hidden="true" />
                 <span>Passwort erfolgreich geändert!</span>
               </div>
             )}
@@ -232,7 +232,7 @@ export default function ChangePasswordPage() {
               href="/intern/members"
               className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
             >
-              <ArrowLeft className="h-4 w-4" />
+              <ArrowLeft className="h-4 w-4" aria-hidden="true" />
               Zurück zur Mitgliederliste
             </Link>
           </div>
