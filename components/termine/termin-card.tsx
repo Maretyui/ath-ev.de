@@ -6,13 +6,14 @@ type TerminCardProps = {
   id: string;
   title: string;
   date: string;
+  dateTime: string;
   time: string;
   location: string;
   image?: string | null;
   isPast?: boolean;
 };
 
-export function TerminCard({ id, title, date, time, location, image, isPast }: TerminCardProps) {
+export function TerminCard({ id, title, date, dateTime, time, location, image, isPast }: TerminCardProps) {
   return (
     <Link
       href={`/termine/${id}`}
@@ -35,7 +36,7 @@ export function TerminCard({ id, title, date, time, location, image, isPast }: T
       )}
       <div className="space-y-3 p-6">
         <div className="flex items-center justify-between gap-3 text-xs uppercase tracking-[0.24em] text-muted-foreground">
-          <span>{date}</span>
+          <time dateTime={dateTime}>{date}</time>
           <span>{time}</span>
         </div>
         <h3 className="min-h-[3rem] text-lg font-semibold leading-snug text-foreground">{title}</h3>

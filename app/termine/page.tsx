@@ -55,6 +55,7 @@ export default async function TerminePage() {
                 id={termin.id}
                 title={termin.title}
                 date={formatListDate(termin.date)}
+                dateTime={termin.date.toISOString()}
                 time={termin.time}
                 location={termin.location}
                 image={termin.image}
