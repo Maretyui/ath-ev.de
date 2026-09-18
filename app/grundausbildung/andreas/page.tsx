@@ -1,4 +1,11 @@
+import type { Metadata } from "next";
 import { TrainerProfile } from "@/components/grundausbildung/trainer-profile";
+
+export const metadata: Metadata = {
+  title: "Andreas Jacob",
+  description:
+    "Andreas Jacob ist Trainer, Ausbilder und Vereinsvorsitz der Aquanautic Taucher Hamburg – über 20 Jahre Erfahrung im Tauchsport.",
+};
 
 export default function AndreasPage() {
   return (

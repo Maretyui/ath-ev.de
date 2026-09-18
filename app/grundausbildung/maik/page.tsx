@@ -1,4 +1,11 @@
+import type { Metadata } from "next";
 import { TrainerProfile } from "@/components/grundausbildung/trainer-profile";
+
+export const metadata: Metadata = {
+  title: "Maik Reinhardt",
+  description:
+    "Maik Reinhardt ist Ausbilder, Trainer und Jugendwart der Aquanautic Taucher Hamburg und begleitet neue Mitglieder von den ersten Tauchversuchen bis zum selbstständigen Tauchgang.",
+};
 
 export default function MaikPage() {
   return (
