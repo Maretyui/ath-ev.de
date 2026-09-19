@@ -155,3 +155,4 @@ Standard Tailwind breakpoints:
 - ARIA labels where interactive elements lack text
 - Focus states visible on keyboard navigation
 - Color alone does not convey information (use icons/text too)
+- Purely decorative icons (e.g. an icon paired with adjacent text that already conveys the same meaning, like an alert icon next to an error message) get `aria-hidden="true"` so screen readers don't announce them redundantly
